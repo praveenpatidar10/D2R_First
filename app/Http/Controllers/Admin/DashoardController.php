@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class DashoardController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -21,8 +21,8 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
-    {
-        return view('home');
+    public function index(){
+        $templete=['title'=>'DBF CENTRAL','subtitle'=>'Dashoard','Link'=>'Dashoard'];
+        return view('admin.dashboard',$templete);
     }
 }
