@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
      <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>DFB CENTERAL| Dashboard</title>
+  <title>DFB CENTERAL| {{$title}}</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -29,6 +29,7 @@
   <link rel="stylesheet" href="{{asset('admin/plugins/datatables-bs4/css/dataTables.bootstrap4.css')}}" type="text/css">
   <link rel="stylesheet" href="{{asset('admin/plugins/toastr/toastr.min.css')}}" type="text/css">
   <link rel="stylesheet" href="{{asset('admin/plugins/confirm/css/jquery-confirm.css')}}" type="text/css">
+  <link rel="stylesheet" href="{{asset('admin/plugins/datetimePicker/jquery.datetimepicker.css')}}" >
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <style>
@@ -103,7 +104,7 @@ font-weight: normal;
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{url('admin/events')}}" class="nav-link">
               <i class="fas fa-circle nav-icon"></i>
               <p>Events Management</p>
             </a>
@@ -211,6 +212,8 @@ font-weight: normal;
 <script src="{{asset('admin/dist/js/adminlte.js')}}" type="text/javascript"></script>
 <script src="{{asset('admin/plugins/toastr/toastr.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('admin/plugins/confirm/js/jquery-confirm.js')}}" type="text/javascript"></script>
+<script src="{{asset('admin/plugins/datetimePicker/php-date-formatter.min.js')}}"></script>
+<script src="{{asset('admin/plugins/datetimePicker/jquery.datetimepicker.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <!--<script src="{{asset('admin/dist/js/pages/dashboard.js')}}"></script>-->
 <!-- AdminLTE for demo purposes -->

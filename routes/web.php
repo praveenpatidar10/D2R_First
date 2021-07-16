@@ -55,6 +55,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
          Route::get('blog/getDesc/{id}', 'Admin\BlogsController@showBlogDescription');
          Route::get('blog/delete/{id}', 'Admin\BlogsController@deleteBlog');
          
+          //Events
+         Route::get('events', 'Admin\EventsController@index')->name('admin.events');
+         Route::get('events/manage/{param?}', 'Admin\EventsController@manage');
+         Route::post('events/save', 'Admin\EventsController@saveEvents');
+         Route::post('events/getdatatable', 'Admin\EventsController@getEventsDatatable');
+         Route::get('event/status/update/{id}/{status}', 'Admin\EventsController@statusUpdate');
+         Route::get('event/getDesc/{id}', 'Admin\EventsController@showEventDescription');
+         Route::get('event/delete/{id}', 'Admin\EventsController@deleteEvent');
+         
 });
 
 
