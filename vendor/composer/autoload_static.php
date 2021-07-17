@@ -516,6 +516,8 @@ class ComposerStaticInitcb03e62a42e882ee309fb9312fdde36c
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Model\\Blog' => __DIR__ . '/../..' . '/app/Model/Blog.php',
         'App\\Model\\Event' => __DIR__ . '/../..' . '/app/Model/Event.php',
+        'App\\Model\\Subscriber' => __DIR__ . '/../..' . '/app/Model/Subscriber.php',
+        'App\\Model\\Usergroup' => __DIR__ . '/../..' . '/app/Model/Usergroup.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',

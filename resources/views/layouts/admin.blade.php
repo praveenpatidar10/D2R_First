@@ -92,31 +92,31 @@ font-weight: normal;
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
          
           <li class="nav-item">
-            <a href="{{url('admin/dashboard')}}" class="nav-link">
+            <a href="{{url('admin/dashboard')}}" class="nav-link <?=($Link=='Dashoard')?'active':'';?>" >
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p> Dashboard</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{url('admin/blogs')}}" class="nav-link">
+            <a href="{{url('admin/blogs')}}" class="nav-link <?=($Link=='blogs')?'active':'';?>">
               <i class="fas fa-circle nav-icon"></i>
               <p>Blogs Management</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{url('admin/events')}}" class="nav-link">
+            <a href="{{url('admin/events')}}" class="nav-link <?=($Link=='events')?'active':'';?>">
               <i class="fas fa-circle nav-icon"></i>
               <p>Events Management</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{url('admin/subscribers')}}" class="nav-link <?=($Link=='subscriber')?'active':'';?>">
               <i class="nav-icon far fa-circle"></i>
               <p class="text">Subscriber Management</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{url('admin/groups')}}" class="nav-link <?=($Link=='groups')?'active':'';?>">
               <i class="nav-icon far fa-circle"></i>
               <p class="text">Groups Management</p>
             </a>

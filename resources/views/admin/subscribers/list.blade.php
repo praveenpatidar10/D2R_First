@@ -15,36 +15,35 @@
                       <div class="card">
                       <div class="card-header">
                         <h3 class="card-title">{{$subtitle}}</h3>
-                        <div class="card-tools">
-                          <a href="{{url('admin/events/manage')}}" class="btn btn-success btn-sm " data-toggle="tooltip" title="Create New Blog">
-                            <i class="fas fa-plus"></i> Create
-                          </a>
-                          
-                        </div>
+                        
                       </div>
                       <!-- /.card-header -->
                       <div class="card-body">
                          <table class="table filter-table ">
                             <tbody><tr>
-                                <td style="width:70%"></td>
+                                <td style="width:40%"></td>
                                 <td style="width:30%">
                                     <div class="input-group">
                                      <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-search"></i></span></div>
-                                       <input id="table-0" class="form-control search-input-text" data-column="0" type="text" placeholder="Event title" data-original-title="" title="">
+                                       <input id="table-0" class="form-control search-input-text" data-column="0" type="text" placeholder="Search by name" data-original-title="" title="">
+                                    </div>
+                               </td>
+                               <td style="width:30%">
+                                    <div class="input-group">
+                                     <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-search"></i></span></div>
+                                       <input id="table-1" class="form-control search-input-text" data-column="1" type="text" placeholder=" Search by email" data-original-title="" title="">
                                     </div>
                                </td>
                             </tr>
                             
                         </tbody></table>
-                        <table class="table table-bordered table-hover" id="events-datatable">
+                        <table class="table table-bordered table-hover" id="subscribers-datatable">
                           <thead>                  
                             <tr>
                               <th>#</th>
-                              <th>Title</th>
-                              <th>Link</th>
-                               <th>YouTube Link</th>
-                              <th>Event Date</th>
-                              <th>Description</th>
+                              <th>Name</th>
+                              <th>Email</th>
+                              <th>Group</th>
                               <th>Status</th>
                               <th>Action</th>
                             </tr>

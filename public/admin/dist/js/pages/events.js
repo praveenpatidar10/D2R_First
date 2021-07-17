@@ -18,17 +18,27 @@ $(function () {
             'eventImage':{  required: {
                          depends: function () { return $('#id').length == 0; }
                      }
+                
+            },
+                    'YouTubeUrl':{ 
+                        required: {
+                         depends: function () { return $('#YouTubeUrl').length == 0; }
+                       },
+                       url: {
+                         depends: function () { return $('#YouTubeUrl').length == 0; }
+                       }
                 }
         },
         messages: {
            
             'title':{
-                required: "Name is required!",
+                required: "Title is required!",
              },
              'eventLink':{
                 required: "Event link is required!",
                 url: "Invalid url provided.",
              },
+             
              'eventDateTime':{
                 required: "Choose event date-time",
              },
@@ -111,6 +121,7 @@ $(function () {
                     { "data": "sno"},
                     {"data" : "title", "className":'text-center'},
                     {"data" : "link", "className":'text-center'},
+                     {"data" : "youtubelink", "className":'text-center'},
                     {"data" : "eventDate", "className":'text-center'},
                     {"data" : "description","orderable":false , "className":'text-center'},
                     {"data" : "status","orderable":false , "className":'text-center'},
@@ -123,7 +134,8 @@ $(function () {
                     { "width": "15%", "targets": 3 },
                     { "width": "10%", "targets": 4},
                     { "width": "10%", "targets": 5},
-                    { "width": "20%", "targets": 6},
+                    { "width": "10%", "targets": 6},
+                    { "width": "10%", "targets": 7},
                  
                   ],
             } );
@@ -149,42 +161,85 @@ $(function () {
             });
    });
    
-    // $(document).on('click', '.btn-status', function (e) { 
-    //     var title =$(this).attr('data-title');
-    //     var id =$(this).attr('data-id');
-    //     var status =($(this).attr('data-status'));
-    //     var msg ="";var st=status;var typ="";
-    //     if(status=='Active'){
-    //       st ='Inactive';typ="red";
-    //       msg = "<p style='color:red;'>Sure you want to <i> Inactive Event: </i> <strong>"+title+"</strong>? </p>";
-    //     }else{
-    //       st ='Active';typ="green";
-    //       msg = "<p style='color:green;'>Sure you want to <i>Live Event: </i> <strong>"+title+"</strong>? </p>";
-    //     }
+     $(document).on('click', '.btn-status-live', function (e) { 
+        var title =$(this).attr('data-title');
+        var id =$(this).attr('data-id');
+        var status =($(this).attr('data-status'));
+       var st ='Past';
+       var typ="red";
+       var msg = "<p style='color:red;'>Sure you want to mark as <i>Past Event: </i> <strong>"+title+"</strong>? </p>";
+       
 
-    //     $.confirm({
-    //       title: 'Confirmation',
-    //       content: msg,
-    //       type: typ,
-    //       typeAnimated: true,
-    //       buttons: {
-    //           confirm: function () {
-    //             $.get(base_url+"/admin/blog/status/update/"+id+"/"+st,function(resp) {
-    //                 if($.trim(resp.status)=='success'){
-    //                      toastr.success(resp.message, 'Success');
-    //                      EVENTTABLE.ajax.reload();
-    //                 }else{
-    //                   toastr.error(resp.message, 'Error');
-    //                 }
-    //             },'json');
-    //           },
-    //           cancel: function () {
-    //               // $.alert('Canceled!');
-    //           }
-    //       }
-    //   });
+        $.confirm({
+          title: 'Confirmation',
+          content: msg,
+          type: typ,
+          typeAnimated: true,
+          buttons: {
+              confirm: function () {
+                $.get(base_url+"/admin/event/status/update/"+id+"/"+st,function(resp) {
+                    if($.trim(resp.status)=='success'){
+                         toastr.success(resp.message, 'Success');
+                         EVENTTABLE.ajax.reload();
+                    }else{
+                      toastr.error(resp.message, 'Error');
+                    }
+                },'json');
+              },
+              cancel: function () {
+                  // $.alert('Canceled!');
+              }
+          }
+      });
  
-    // });
+     });
+     
+      $(document).on('click', '.btn-status-new', function (e) {  
+        var title =$(this).attr('data-title');
+        var id =$(this).attr('data-id');
+       $.confirm({
+            icon:'fas fa-youtube',
+            type: 'green',
+            title: "Mark as live",
+            content: '<p>'+title+'</p>'
+                      +'<div class="form-group">'
+                         +'<label>Youtube Url</label>'
+                         +'<input type="url" id="youtube_url" class="form-control" value="" placeholder="Enter youtube url">'
+                       +'</div>'
+                       +'<p>Once update youtube url your event will be marked as LIVE.</p>',
+            buttons: {
+                sayMyName: {
+                    text: 'UPDATE',
+                    btnClass: 'btn-success',
+                    action: function(){
+                        var input = this.$content.find('input#youtube_url');
+                        var errorText = this.$content.find('.text-danger');
+                        if(!input.val().trim()){
+                            $.alert({
+                                content: "Please don't keep the url field empty.",
+                                type: 'red'
+                            });
+                            return false;
+                        }else{
+                            //$.alert('Hello ' + input.val() + ', i hope you have a great day!');
+                            
+                            $.post(base_url+"/admin/events/mark-live/",{id:id,_url:input.val()},function(resp) {
+                                if($.trim(resp.status)=='success'){
+                                       toastr.success(resp.message, 'Success');
+                                       EVENTTABLE.ajax.reload();
+                                }else{
+                                  toastr.error(resp.message, 'Error');
+                                }
+                            },'json');
+                        }
+                    }
+                },
+                later: function(){
+                    // do nothing.
+                }
+            }
+        });
+    });
     
      $(document).on('click', '.btn-delete', function (e) { 
         var title =$(this).attr('data-title');

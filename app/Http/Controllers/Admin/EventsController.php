@@ -56,14 +56,27 @@ class EventsController extends Controller
         $totalRecords =  DB::table('events')->count();
         $result=[];$i=1;
          foreach($brands as $each){
+             //$each->status=='New'
+              
                 $eachData=array();
+                 $eachData['youtubelink']="-";
+            if($each->status=='Past'){
+                   $eachData['status'] ='<span class="badge bg-danger btn-status" data-title="'.$each->title.'" data-id="'.$each->id.'" data-status="'.$each->status.'">Past</span>';
+              }else if($each->status=='Live'){
+                   $eachData['status'] ='<span class="badge bg-success btn-status-live" data-title="'.$each->title.'" data-id="'.$each->id.'" data-status="'.$each->status.'">Live</span>';
+                    $eachData['youtubelink'] = ($each->youtube_link!="")?'<a href="'.$each->youtube_link.'">'.$each->youtube_link.'</a>':'<span class="text-danger">Update YouTube link to go live.</span>';
+              }else{
+                   $eachData['status'] ='<span class="badge bg-warning btn-status-new" data-title="'.$each->title.'" data-id="'.$each->id.'" data-status="'.$each->status.'">Upcoming</span>';
+              }
+              
                 $eachData['sno']          = "<strong>".$i."</strong>";
                 $eachData['title']        = $each->title;
-                 $eachData['link']        = $each->link;
-                 $eachData['eventDate']        = $each->eventDate;
-                $eachData['description']       = '<a data-title="'.$each->title.'" class="view-desc" href="#" id="'.$each->id.'">View Description</a>';
-                $eachData['status'] =($each->status=='Active')?'<span class="badge bg-success btn-status" data-title="'.$each->title.'" data-id="'.$each->id.'" data-status="'.$each->status.'">Active</span>'
-                                                              :'<span class="badge bg-danger btn-status"  data-title="'.$each->title.'" data-id="'.$each->id.'" data-status="'.$each->status.'">Inactive</span>';
+                 $eachData['link']        = '<a href="'.$each->link.'" target="_blank">'.$each->link.'</a>';
+                 
+                 $eachData['eventDate']        = Carbon::createFromFormat('Y-m-d H:i:s', $each->eventDate)->format('d/m/Y h:i A');
+                $eachData['description']       = '<a data-title="'.$each->title.'" class="view-desc" href="#" id="'.$each->id.'">View</a>';
+                // $eachData['status'] =($each->status=='Active')?'<span class="badge bg-success btn-status" data-title="'.$each->title.'" data-id="'.$each->id.'" data-status="'.$each->status.'">Active</span>'
+                //                                               :'<span class="badge bg-danger btn-status"  data-title="'.$each->title.'" data-id="'.$each->id.'" data-status="'.$each->status.'">Inactive</span>';
                 $eachData['action']          = '<div class="btn-group">
                                                 <a href="'.url('admin/events/manage/'.$each->id).'"  data-name="'.$each->title.'" class="btn btn-info btn-edit btn-sm "><i class="fas fa-edit"></i></a>
                                                 <a href="#" data-id="'.$each->id.'" data-title="'.$each->title.'" class="btn btn-danger btn-sm btn-delete"><i class="fas fa-trash-alt"></i></a>
@@ -111,6 +124,9 @@ class EventsController extends Controller
             $event->link= $request->eventLink;
             $event->eventDate= $dateTime;//$request->eventDateTime;
             $event->description= htmlentities($_POST['description']);
+            if( $event->status=='Live'){
+                 $event->youtube_link =$request->YouTubeUrl;
+            }
             $event->save();
             $msg = "Updated";
         }else{
@@ -154,6 +170,23 @@ class EventsController extends Controller
           return Response::json(array('status'=>'error','message'=>'something went wrong!'));
       }
     }
+    
+    public function statusMarkLive(Request $request){
+      $event = Event::find($request->id);
+      if($event->status=='New'){
+          $event->status = "Live";
+          $event->youtube_link =$request->_url;
+          if($event->save()){
+             return Response::json(['status'=>'success','message'=>"Event marked as live successfully"]);
+          }else{
+              return Response::json(array('status'=>'error','message'=>'something went wrong!'));
+          }
+      }else{
+         return Response::json(array('status'=>'error','message'=>'Invalid access')); 
+      }
+    }
+    
+    
     
      public function deleteEvent(Request $request){
         $event = Event::find($request->id);

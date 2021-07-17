@@ -61,8 +61,23 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
          Route::post('events/save', 'Admin\EventsController@saveEvents');
          Route::post('events/getdatatable', 'Admin\EventsController@getEventsDatatable');
          Route::get('event/status/update/{id}/{status}', 'Admin\EventsController@statusUpdate');
+         Route::post('events/mark-live', 'Admin\EventsController@statusMarkLive');
          Route::get('event/getDesc/{id}', 'Admin\EventsController@showEventDescription');
          Route::get('event/delete/{id}', 'Admin\EventsController@deleteEvent');
+         
+          //Subscriber
+         Route::get('subscribers', 'Admin\SubscribersController@index')->name('admin.subscribers');
+         Route::post('subscribers/getdatatable', 'Admin\SubscribersController@getSubscribersDatatable');
+         Route::get('subscriber/status/update/{id}/{status}', 'Admin\SubscribersController@statusUpdate');
+         Route::get('subscriber/delete/{id}', 'Admin\SubscribersController@deleteSubscriber');
+         
+          //Groups
+         Route::get('groups', 'Admin\GroupsController@index')->name('admin.groups');
+         Route::post('groups/save', 'Admin\GroupsController@saveGroups');
+         Route::post('groups/getdatatable', 'Admin\GroupsController@getGroupsDatatable');
+         Route::get('group/status/update/{id}/{status}', 'Admin\GroupsController@statusUpdate');
+         //Route::get('event/getDesc/{id}', 'Admin\EventsController@showEventDescription');
+         Route::get('group/delete/{id}', 'Admin\GroupsController@deleteGroup');
          
 });
 

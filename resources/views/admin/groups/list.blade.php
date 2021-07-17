@@ -9,18 +9,29 @@
       }
     </style>
         <div  class="container-fluid">
+            <form id="addGroupForm" action="{{url('admin/groups/save/')}}"  method="POST">
+                  @csrf
+                 <div  class="row">
+                <div class="col-md-3"></div>
+                 <div class="col-md-4">
+                     <div class="form-group ">
+                          <label for="groupName" class="form-label">Group Name</label>
+                          <input type="text" class="form-control" name="groupName" id="groupName" placeholder="Enter group name">
+                     </div>
+                 </div>
+                 <div class="col-md-2">
+                     <button  style="margin-top: 30px;" type="submit" id="btn-save" class="btn btn-block btn-success btn-flat">Create</button>
+                 </div>
+                <div class="col-md-3"></div>
+            </div>
+            </form>
             <div class="row">
                  
                   <div class="col-md-12">
                       <div class="card">
                       <div class="card-header">
                         <h3 class="card-title">{{$subtitle}}</h3>
-                        <div class="card-tools">
-                          <a href="{{url('admin/events/manage')}}" class="btn btn-success btn-sm " data-toggle="tooltip" title="Create New Blog">
-                            <i class="fas fa-plus"></i> Create
-                          </a>
-                          
-                        </div>
+                        
                       </div>
                       <!-- /.card-header -->
                       <div class="card-body">
@@ -30,21 +41,18 @@
                                 <td style="width:30%">
                                     <div class="input-group">
                                      <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-search"></i></span></div>
-                                       <input id="table-0" class="form-control search-input-text" data-column="0" type="text" placeholder="Event title" data-original-title="" title="">
+                                       <input id="table-0" class="form-control search-input-text" data-column="0" type="text" placeholder="Search by group name" data-original-title="" title="">
                                     </div>
                                </td>
+                              
                             </tr>
                             
                         </tbody></table>
-                        <table class="table table-bordered table-hover" id="events-datatable">
+                        <table class="table table-bordered table-hover" id="groups-datatable">
                           <thead>                  
                             <tr>
                               <th>#</th>
-                              <th>Title</th>
-                              <th>Link</th>
-                               <th>YouTube Link</th>
-                              <th>Event Date</th>
-                              <th>Description</th>
+                              <th>Group Name</th>
                               <th>Status</th>
                               <th>Action</th>
                             </tr>
