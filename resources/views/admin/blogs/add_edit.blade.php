@@ -19,10 +19,8 @@
                   </div>
                   <div class="form-group">
                     <label for="description">Description</label>
-                                    <textarea class="textarea" placeholder="Place some text here" name="description" id="description"
-                          style="width: 100%; height:400px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">
-                                        {{isset($blog)?(html_entity_decode($blog->description)):''}}
-                                    </textarea>
+                                    <textarea class="textarea summernote" placeholder="Place some text here" name="description" id="description"
+                          style="width: 100%; height:400px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{isset($blog)?(html_entity_decode($blog->description)):''}}</textarea>
                   </div>
                   <div class="form-group">
                     <label for="blogImage">Image</label>

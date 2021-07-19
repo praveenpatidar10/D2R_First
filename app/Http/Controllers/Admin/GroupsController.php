@@ -7,6 +7,8 @@ use File;
 use Response;
 use DB;
 use App\Model\Usergroup;
+use App\Model\Groupmember;
+use App\Model\Subscriber;
 
 class GroupsController extends Controller
 {
@@ -61,6 +63,7 @@ class GroupsController extends Controller
                 $eachData['status'] =($each->status=='Active')?'<span class="badge bg-success btn-status" data-title="'.$each->group_name.'" data-id="'.$each->id.'" data-status="'.$each->status.'">Active</span>'
                                                               :'<span class="badge bg-danger btn-status"  data-title="'.$each->group_name.'" data-id="'.$each->id.'" data-status="'.$each->status.'">Inactive</span>';
                 $eachData['action']          = '<div class="btn-group">
+                                                 <a href="'.url('admin/group/members/'.$each->id).'" class="btn btn-success btn-sm "><i class="fas fa-plus"></i></a>
                                                 <a href="#" data-id="'.$each->id.'" data-name="'.$each->group_name.'" class="btn btn-info btn-edit btn-sm "><i class="fas fa-edit"></i></a>
                                                 <a href="#" data-id="'.$each->id.'" data-title="'.$each->group_name.'" class="btn btn-danger btn-sm btn-delete"><i class="fas fa-trash-alt"></i></a>
                                                </div>';  
@@ -78,7 +81,40 @@ class GroupsController extends Controller
         return Response::json($json_data); 
    }
     
+    public function groupMembers(Request $request){
+        $group = Usergroup::where('id',$request->id)->first();
+        $groupId = $request->id;
+       
+        $templete=['title'=>'Groups','subtitle'=>'Group Members('.$group->group_name.')','Link'=>'groups','group'=>$group,'scripts'=>[asset('admin/dist/js/pages/groups.js')]];
+        $templete['groupmembers'] = DB::table("subscribers")->select('*')
+                ->whereIn('id',function($query) use ($groupId){
+                     $query->select('member_id')->where('group_id',$groupId)->from('groupmembers');
+          })->get();
+          
+        $templete['othermembers'] = DB::table("subscribers")->select('*')
+                        ->whereNOTIn('id',function($query) use ($groupId){
+                             $query->select('member_id')->where('group_id',$groupId)->from('groupmembers');
+                      })->get();
+          
+        return view('admin.groups.members',$templete);
+    }
     
+    public function  groupMembersManage(Request $request){
+        if($request->param=='add'){
+            $member = Subscriber::find($request->memberId);
+            $gm = new Groupmember;
+            $gm->member_id = $request->memberId;
+            $gm->group_id = $request->groupId;
+            $gm->save();
+              return Response::json(['status'=>'success','message'=>$member->name.' successfully added to group','data'=>['name'=>$member->name,'email'=>$member->email]]);
+        }else if($request->param=='remove'){
+            $member = Subscriber::find($request->memberId);
+             Groupmember::where('member_id',$request->memberId)->where('group_id',$request->groupId)->delete();
+             return Response::json(['status'=>'success','message'=>$member->name.' successfully removed from group','data'=>['name'=>$member->name,'email'=>$member->email]]);
+        }else{
+            return Response::json(['status'=>'error','message'=>'Invalid access']);
+        }
+    }
     
     public function  saveGroups(Request $request){
        if(isset($request->id)){

@@ -8,8 +8,8 @@ $(function () {
          }
     });
     
-     $("#EventForm").validate({
-        
+     var summernoteValidator =$("#EventForm").validate({
+         ignore: ':hidden:not(.summernote),.note-editable.card-block',
         rules: {
             'title': { required: true },
             'eventLink': { required: true,url:true },
@@ -62,6 +62,8 @@ $(function () {
                 error.insertAfter(element.parent('.form-group'));
             }else if(name=="eventImage"){
                 error.insertAfter(element.parent().parent('.input-group'));
+            }else if (element.hasClass("summernote")) {
+                error.insertAfter(element.siblings(".note-editor"));
             }else{
               error.insertAfter(element);  
             }
@@ -103,7 +105,24 @@ $(function () {
 
     });
     
-     $('.textarea').summernote();
+     var summernoteElement = $('.summernote');
+     summernoteElement.summernote({
+        height: 200,
+        callbacks: {
+            onChange: function (contents, $editable) {
+                // Note that at this point, the value of the `textarea` is not the same as the one
+                // you entered into the summernote editor, so you have to set it yourself to make
+                // the validation consistent and in sync with the value.
+                summernoteElement.val(summernoteElement.summernote('isEmpty') ? "" : contents);
+
+                // You should re-validate your element after change, because the plugin will have
+                // no way to know that the value of your `textarea` has been changed if the change
+                // was done programmatically.
+                summernoteValidator.element(summernoteElement);
+            }
+        }
+    });
+     
      $('#eventDateTime').datetimepicker({minDate:0,formatDate:'d/m/Y',formatTime:'h:i A',format:'d/m/Y h:i A'});
       var EVENTTABLE = $('#events-datatable').DataTable( {
         "scrollX": false,

@@ -99,31 +99,31 @@ font-weight: normal;
           </li>
           <li class="nav-item">
             <a href="{{url('admin/blogs')}}" class="nav-link <?=($Link=='blogs')?'active':'';?>">
-              <i class="fas fa-circle nav-icon"></i>
+              <i class="fas fa-blog nav-icon"></i>
               <p>Blogs Management</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="{{url('admin/events')}}" class="nav-link <?=($Link=='events')?'active':'';?>">
-              <i class="fas fa-circle nav-icon"></i>
+              <i class="fas fa-calendar-alt nav-icon"></i>
               <p>Events Management</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="{{url('admin/subscribers')}}" class="nav-link <?=($Link=='subscriber')?'active':'';?>">
-              <i class="nav-icon far fa-circle"></i>
+              <i class="nav-icon far fa-user"></i>
               <p class="text">Subscriber Management</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="{{url('admin/groups')}}" class="nav-link <?=($Link=='groups')?'active':'';?>">
-              <i class="nav-icon far fa-circle"></i>
+              <i class="nav-icon fas fa-layer-group"></i>
               <p class="text">Groups Management</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon far fa-circle"></i>
+            <a href="{{url('admin/templates')}}" class="nav-link">
+              <i class="nav-icon far fa-envelope"></i>
               <p>Email Management</p>
             </a>
           </li>

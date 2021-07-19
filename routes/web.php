@@ -76,8 +76,18 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
          Route::post('groups/save', 'Admin\GroupsController@saveGroups');
          Route::post('groups/getdatatable', 'Admin\GroupsController@getGroupsDatatable');
          Route::get('group/status/update/{id}/{status}', 'Admin\GroupsController@statusUpdate');
-         //Route::get('event/getDesc/{id}', 'Admin\EventsController@showEventDescription');
+         Route::get('group/members/{id}', 'Admin\GroupsController@groupMembers');
+         Route::post('group/members/manage/{param}/{id}', 'Admin\GroupsController@groupMembersManage');
          Route::get('group/delete/{id}', 'Admin\GroupsController@deleteGroup');
+         
+         //Templates
+         Route::get('templates', 'Admin\TemplateController@index')->name('admin.templates');
+         Route::get('templates/manage/{param?}', 'Admin\TemplateController@manage');
+         Route::post('templates/save', 'Admin\TemplateController@saveTemplates');
+         Route::post('templates/getdatatable', 'Admin\TemplateController@getTemplatesDatatable');
+         Route::get('template/status/update/{id}/{status}', 'Admin\TemplateController@statusUpdate');
+         Route::get('template/getDesc/{id}', 'Admin\TemplateController@showTemplateDescription');
+         Route::get('template/delete/{id}', 'Admin\TemplateController@deleteTemplate');
          
 });
 

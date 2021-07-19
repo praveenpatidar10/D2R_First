@@ -118,6 +118,35 @@ $(function () {
             });
    });
    
+  
+   
+    $(document).on('click', '.btn-manage-group-member', function (e) {  
+        var memberId  =  $(this).attr('data-m');
+        var groupId  =  $(this).attr('data-g');
+        var param  =  $(this).hasClass('add-member')?'add':'remove';
+         $.post(base_url+"/admin/group/members/manage/"+param+"/"+memberId,{memberId:memberId,groupId:groupId},function(resp) {
+                    if($.trim(resp.status)=='success'){
+                        console.log(resp);
+                         toastr.success(resp.message, 'Success');
+                         if(param==='add'){
+                             $('#groupTbody').append('<tr id="grp-'+memberId+'-'+groupId+'">'
+                              +'<td><b>'+resp.data.name+'</b> - '+resp.data.email+'</td>'
+                              +'<td style="width: 40px"><a data-m="'+memberId+'" data-g="'+groupId+'" class="btn btn-sm btn-danger btn-manage-group-member remove-member">Remove</a></td>'
+                            +'</tr>');
+                            $('#othr-'+memberId+'-'+groupId).remove();
+                         }else{
+                             $('#otherTbody').append('<tr id="othr-'+memberId+'-'+groupId+'">'
+                              +'<td><b>'+resp.data.name+'</b> - '+resp.data.email+'</td>'
+                              +'<td style="width: 40px"><a data-m="'+memberId+'" data-g="'+groupId+'" class="btn btn-sm btn-success btn-manage-group-member add-member">Add</a></td>'
+                            +'</tr>');
+                             $('#grp-'+memberId+'-'+groupId).remove();
+                         }
+                    }else{
+                      toastr.error(resp.message, 'Error');
+                    }
+                },'json');
+    })
+   
     $(document).on('click', '.btn-status', function (e) { 
         var title =$(this).attr('data-title');
         var id =$(this).attr('data-id');

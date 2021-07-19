@@ -7,58 +7,40 @@ $(function () {
              'X-CSRF-TOKEN': _token
          }
     });
-    
-     var summernoteValidator =$("#BlogForm").validate({
+  
+     var summernoteValidator = $("#TemplateForm").validate({
          ignore: ':hidden:not(.summernote),.note-editable.card-block',
         rules: {
             'title': { required: true },
             'description': { required: true },
-            'blogImage':{  required: {
-                         depends: function () { return $('#id').length == 0; }
-                     }
-                }
         },
         messages: {
            
             'title':{
-                required: "title is required!",
+                required: "Enter email subject",
              },
-            'blogImage':{
-                required: "Blog image is required!",
-            },
-            'description':{ required: "Enter blog description." },
+            'description':{ required: "Enter template description." },
         },
-        //  highlight: function(element) {
-        //     $(element).parent().parent('.form-group').addClass('has-error');
-        //     $(element).parent().parent('.form-group').css('margin-bottom','0px');
-        // },
-        // unhighlight: function(element) {
-        //     $(element).parent().parent('.form-group').removeClass('has-error');
-        //      $(element).parent().parent('.form-group').css('margin-bottom','15px');
-        // },
-        errorPlacement: function(error, element) {
+       
+        errorPlacement: function (error, element) {
+            // Add the `help-block` class to the error element
+            error.addClass("invalid-feedback");
             console.log(element);
-            var name = element.attr("name");
-            if(name=="description"){
-                error.insertAfter(element.parent('.form-group'));
-            }else if(name=="blogImage"){
-                error.insertAfter(element.parent().parent('.input-group'));
-            }else if (element.hasClass("summernote")) {
+             if (element.hasClass("summernote")) {
                 error.insertAfter(element.siblings(".note-editor"));
-            }else{
-              error.insertAfter(element);  
+            } else {
+                error.insertAfter(element);
             }
-         //error.insertAfter(element.parent().parent('.form-group'));
         },
         submitHandler: function (form) {
             $('#btnUpdateUser').html('<i class="fa fa-spinner fa-spin"></i> Loading');
             $('#btnUpdateUser').prop('disabled', true);
             $('#btnUpdateUser').attr('disabled', true);
-             var formData = new FormData($('#BlogForm')[0]); 
+             var formData = new FormData($('#TemplateForm')[0]); 
              var txt = ($('#id').length)?'Update':'Create';
             $.ajax({
                     type: 'POST',
-                    url: base_url+'/admin/blogs/save/',
+                    url: base_url+'/admin/templates/save/',
                     data: formData,
                     dataType: 'json',
                     contentType: false,
@@ -74,6 +56,7 @@ $(function () {
                                   $('#btn-save').html(txt);
                                  
                             if($.trim(result.status)=='success'){
+                                $('#TemplateForm')[0].reset();
                                 toastr.success(result.message, 'Success');
                             }else{
                                 toastr.error(result.message, 'Error');
@@ -86,6 +69,7 @@ $(function () {
 
     });
     
+     //$('.textarea').summernote({ height: 200,});
      var summernoteElement = $('.summernote');
      summernoteElement.summernote({
         height: 200,
@@ -104,7 +88,7 @@ $(function () {
         }
     });
      
-      var BLOGTABLE = $('#blogs-datatable').DataTable( {
+      var TEMPTABLE = $('#templates-datatable').DataTable( {
         "scrollX": false,
          bLengthChange: false,
          responsive: true,
@@ -113,7 +97,7 @@ $(function () {
                 "processing": true,
                  "serverSide": true,
                "ajax": {
-                    "url": base_url+"/admin/blogs/getdatatable",
+                    "url": base_url+"/admin/templates/getdatatable",
                      "type": "POST",
                 },
                 "columns": [
@@ -136,7 +120,7 @@ $(function () {
     $('.search-input-text').on( 'keyup change', function () {   // for text boxes
         var i =$(this).attr('data-column');  // getting column index
         var v =$(this).val();  // getting search input value
-        BLOGTABLE.columns(i).search(v).draw();
+        TEMPTABLE.columns(i).search(v).draw();
    });
    $('body').on('click','.view-desc',function(e){
       var id = $(this).attr('id'); 
@@ -144,7 +128,7 @@ $(function () {
        $.dialog({
                 icon: 'icon ion-ios-list-outline',
                 title:title,
-                content: "url:"+base_url+"/admin/blog/getDesc/"+id,
+                content: "url:"+base_url+"/admin/template/getDesc/"+id,
                 type: 'red',
                 animation: 'scale',
                 columnClass: 'medium',
@@ -161,10 +145,10 @@ $(function () {
         var msg ="";var st=status;var typ="";
         if(status=='Active'){
           st ='Inactive';typ="red";
-          msg = "<p style='color:red;'>Sure you want to <i> Inactive Blog: </i> <strong>"+title+"</strong>? </p>";
+          msg = "<p style='color:red;'>Sure you want to <i> Inactive Template: </i> <strong>"+title+"</strong>? </p>";
         }else{
           st ='Active';typ="green";
-          msg = "<p style='color:green;'>Sure you want to <i>Active Blog: </i> <strong>"+title+"</strong>? </p>";
+          msg = "<p style='color:green;'>Sure you want to <i>Active Template: </i> <strong>"+title+"</strong>? </p>";
         }
 
         $.confirm({
@@ -174,10 +158,10 @@ $(function () {
           typeAnimated: true,
           buttons: {
               confirm: function () {
-                $.get(base_url+"/admin/blog/status/update/"+id+"/"+st,function(resp) {
+                $.get(base_url+"/admin/template/status/update/"+id+"/"+st,function(resp) {
                     if($.trim(resp.status)=='success'){
                          toastr.success(resp.message, 'Success');
-                         BLOGTABLE.ajax.reload();
+                         TEMPTABLE.ajax.reload();
                     }else{
                       toastr.error(resp.message, 'Error');
                     }
@@ -198,15 +182,15 @@ $(function () {
         $.confirm({
             icon:'fas fa-trash',
           title: 'Confirmation',
-          content: "<p>"+title+"</p><p style='color:red;'>Sure you want to Delete Blog?</p>",
+          content: "<p>"+title+"</p><p style='color:red;'>Sure you want to Delete Template?</p>",
           type: 'red',
           typeAnimated: true,
           buttons: {
               confirm: function () {
-                $.get(base_url+"/admin/blog/delete/"+id,function(resp) {
+                $.get(base_url+"/admin/template/delete/"+id,function(resp) {
                     if($.trim(resp.status)=='success'){
                          toastr.success(resp.message, 'Success');
-                         BLOGTABLE.ajax.reload();
+                         TEMPTABLE.ajax.reload();
                     }else{
                       toastr.error(resp.message, 'Error');
                     }
