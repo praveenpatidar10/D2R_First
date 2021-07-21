@@ -54,8 +54,17 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="title">YouTube Url</label>
+                                <label for="title">Live Url</label>
                                 <input type="text" class="form-control" id="YouTubeUrl" name="YouTubeUrl" placeholder="Enter YouTube Url" value="{{isset($event)?$event->youtube_link:''}}">
+                          </div>
+                        </div>
+                    </div>
+                    @elseif($event->status=='Past')
+                     <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="title">Live Url</label>
+                                <input type="text" class="form-control" id="YouTubeUrl" name="YouTubeUrl" placeholder="Enter YouTube Url" value="{{isset($event)?$event->youtube_link:''}}" readonly>
                           </div>
                         </div>
                     </div>

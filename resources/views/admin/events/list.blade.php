@@ -41,8 +41,8 @@
                             <tr>
                               <th>#</th>
                               <th>Title</th>
-                              <th>Link</th>
-                               <th>YouTube Link</th>
+                              <th>Register Link</th>
+                               <th>Live Link</th>
                               <th>Event Date</th>
                               <th>Description</th>
                               <th>Status</th>

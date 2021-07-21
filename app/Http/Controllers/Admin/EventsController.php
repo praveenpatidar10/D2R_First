@@ -62,11 +62,13 @@ class EventsController extends Controller
                  $eachData['youtubelink']="-";
             if($each->status=='Past'){
                    $eachData['status'] ='<span class="badge bg-danger btn-status" data-title="'.$each->title.'" data-id="'.$each->id.'" data-status="'.$each->status.'">Past</span>';
+                   $eachData['youtubelink'] = '<a href="'.$each->youtube_link.'">'.$each->youtube_link.'</a>';
               }else if($each->status=='Live'){
-                   $eachData['status'] ='<span class="badge bg-success btn-status-live" data-title="'.$each->title.'" data-id="'.$each->id.'" data-status="'.$each->status.'">Live</span>';
+                   $eachData['status'] =' <span>Click here to Mark Past </span></br><span class="badge bg-success btn-status-live" data-title="'.$each->title.'" data-id="'.$each->id.'" data-status="'.$each->status.'">Live</span>
+                  ';
                     $eachData['youtubelink'] = ($each->youtube_link!="")?'<a href="'.$each->youtube_link.'">'.$each->youtube_link.'</a>':'<span class="text-danger">Update YouTube link to go live.</span>';
               }else{
-                   $eachData['status'] ='<span class="badge bg-warning btn-status-new" data-title="'.$each->title.'" data-id="'.$each->id.'" data-status="'.$each->status.'">Upcoming</span>';
+                   $eachData['status'] ='<span>Click here to Mark live </span></br><span class="badge bg-warning btn-status-new" data-title="'.$each->title.'" data-id="'.$each->id.'" data-status="'.$each->status.'">Upcoming</span>';
               }
               
                 $eachData['sno']          = "<strong>".$i."</strong>";

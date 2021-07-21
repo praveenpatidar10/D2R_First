@@ -13,9 +13,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/', 'WelcomeController@index');
+Route::get('/about-us.htm', 'WelcomeController@aboutUsPage');
+Route::get('/events.htm', 'WelcomeController@eventsPage');
+Route::get('/blogs.htm', 'WelcomeController@blogsPage');
+Route::get('/blogs-detail.htm/{param}', 'WelcomeController@blogsDeatilPage');
+Route::get('/ministries.htm', 'WelcomeController@ministriesPage');
+Route::get('/gallery.htm', 'WelcomeController@galleryPage');
+Route::get('/contact-us.htm', 'WelcomeController@contactusPage');
+Route::get('/join-us.htm', 'WelcomeController@joinusPage');
+
+Route::post('/user-subscribe.htm', 'WelcomeController@addUserSubscription');
+Route::post('/post-enquiry.htm', 'WelcomeController@savePostEnquiry');
+
+
 Route::get('/cc', function () {
     Artisan::call('cache:clear');
     echo '<script>alert("cache clear Success")</script>';
@@ -88,6 +102,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
          Route::get('template/status/update/{id}/{status}', 'Admin\TemplateController@statusUpdate');
          Route::get('template/getDesc/{id}', 'Admin\TemplateController@showTemplateDescription');
          Route::get('template/delete/{id}', 'Admin\TemplateController@deleteTemplate');
+         
+          //Templates
+         Route::get('mail-box', 'Admin\MailerController@index')->name('admin.mailbox');
+         Route::post('sendmail', 'Admin\MailerController@sendMail');
+         Route::get('mail/get-group-mail/{id}', 'Admin\MailerController@getGroupMembers');
          
 });
 

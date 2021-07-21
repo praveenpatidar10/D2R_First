@@ -17,18 +17,19 @@
   <link rel="stylesheet" href="{{asset('admin/plugins/jqvmap/jqvmap.min.css')}}" type="text/css">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('admin/dist/css/adminlte.min.css')}}" type="text/css">
-   <link rel="stylesheet" href="{{asset('admin/plugins/jquery-ui/jquery-ui.min.css')}}">
+   <link rel="stylesheet" href="{{asset('js/jquery-ui/jquery-ui.min.css')}}">
   <!-- overlayScrollbars --> 
   <link rel="stylesheet" href="{{asset('admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}" type="text/css">
   <!-- Daterange picker -->
   <link rel="stylesheet" href="{{asset('admin/plugins/daterangepicker/daterangepicker.css')}}" type="text/css">
   <!-- summernote -->
   <link rel="stylesheet" href="{{asset('admin/plugins/summernote/summernote-bs4.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{asset('admin/plugins/select2/css/select2.min.css')}}" type="text/css">
    <!-- DataTables -->
    
   <link rel="stylesheet" href="{{asset('admin/plugins/datatables-bs4/css/dataTables.bootstrap4.css')}}" type="text/css">
-  <link rel="stylesheet" href="{{asset('admin/plugins/toastr/toastr.min.css')}}" type="text/css">
-  <link rel="stylesheet" href="{{asset('admin/plugins/confirm/css/jquery-confirm.css')}}" type="text/css">
+  <link rel="stylesheet" href="{{asset('js/toastr/toastr.min.css')}}" type="text/css">
+  <link rel="stylesheet" href="{{asset('js/confirm/css/jquery-confirm.css')}}" type="text/css">
   <link rel="stylesheet" href="{{asset('admin/plugins/datetimePicker/jquery.datetimepicker.css')}}" >
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
@@ -127,6 +128,12 @@ font-weight: normal;
               <p>Email Management</p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{url('admin/mail-box')}}" class="nav-link">
+              <i class="nav-icon fas fa-mail-bulk"></i>
+              <p>Send Mail</p>
+            </a>
+          </li>
           
         </ul>
       </nav>
@@ -181,10 +188,10 @@ font-weight: normal;
 <!-- ./wrapper -->
 
 <!-- jQuery -->
-<script src="{{asset('admin/plugins/jquery/jquery.min.js')}}" type="text/javascript"></script>
-<script src="{{asset('admin/plugins/jquery/jquery.validate.min.js')}}"></script>
+<script src="{{asset('js/jquery/jquery.min.js')}}" type="text/javascript"></script>
+<script src="{{asset('js/jquery/jquery.validate.min.js')}}"></script>
 <!-- jQuery UI 1.11.4 -->
-<script src="{{asset('admin/plugins/jquery-ui/jquery-ui.min.js')}}" type="text/javascript"></script>
+<script src="{{asset('js/jquery-ui/jquery-ui.min.js')}}" type="text/javascript"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
  <script type="text/javascript">
   
@@ -210,10 +217,12 @@ font-weight: normal;
 <script src="{{asset('admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}" type="text/javascript"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('admin/dist/js/adminlte.js')}}" type="text/javascript"></script>
-<script src="{{asset('admin/plugins/toastr/toastr.min.js')}}" type="text/javascript"></script>
-<script src="{{asset('admin/plugins/confirm/js/jquery-confirm.js')}}" type="text/javascript"></script>
+<script src="{{asset('js/toastr/toastr.min.js')}}" type="text/javascript"></script>
+<script src="{{asset('js/confirm/js/jquery-confirm.js')}}" type="text/javascript"></script>
 <script src="{{asset('admin/plugins/datetimePicker/php-date-formatter.min.js')}}"></script>
 <script src="{{asset('admin/plugins/datetimePicker/jquery.datetimepicker.js')}}"></script>
+<script src="{{asset('admin/plugins/select2/js/select2.full.min.js')}}"></script>
+
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <!--<script src="{{asset('admin/dist/js/pages/dashboard.js')}}"></script>-->
 <!-- AdminLTE for demo purposes -->
