@@ -14,16 +14,16 @@
                   @csrf
                 <div class="card-body">
                   <div class="form-group">
-                    <label for="title">Blog Title</label>
+                    <label for="title">Blog Title <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="title" name="title" placeholder="Enter blog title" value="{{isset($blog)?$blog->title:''}}">
                   </div>
                   <div class="form-group">
-                    <label for="description">Description</label>
+                    <label for="description">Description <span class="text-danger">*</span></label>
                                     <textarea class="textarea summernote" placeholder="Place some text here" name="description" id="description"
                           style="width: 100%; height:400px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{isset($blog)?(html_entity_decode($blog->description)):''}}</textarea>
                   </div>
                   <div class="form-group">
-                    <label for="blogImage">Image</label>
+                    <label for="blogImage">Image  @if(!isset($blog))<span class="text-danger">*</span>  @endif</label>
                     <div class="input-group">
                       <div class="custom-file">
                         <input type="file" class="custom-file-input" id="blogImage" name="blogImage">

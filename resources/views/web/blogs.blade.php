@@ -2,8 +2,8 @@
 @section('content')
 
  
-    <header class="about-header">
-        <h1 class="hf1">DBF Central's Memoir!</h1>
+    <header class="about-header" style="background-image: url('./media/{{config('custom.page_header_blog')}}');;background-position: center;background-repeat: no-repeat;">
+        <!--<h1 class="hf1">DBF Central's Memoir!</h1>-->
     </header>
 
 
@@ -14,7 +14,7 @@
     <?=($count%4 == 1)?'<section class="blogs-wrapper">':'';?>
     <?php  $len = strlen($blog->title);?>
             <div class="blog-wrapper">
-                <a href="{{url('/blog-detail.htm/'.base64_encode($blog->id))}}" class="blog-square">
+                <a href="{{url('/blog-detail.htm/'.$blog->id)}}" class="blog-square">
                     <img src="{{asset('images/'.$blog->image)}}">
                     <h3 class="bf">@if($len<=30) {{$blog->title}} @else {{substr($blog->title,0,28)}}... @endif</h3>
                     <div class="blog-desc">

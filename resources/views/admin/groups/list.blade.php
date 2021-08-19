@@ -15,7 +15,7 @@
                 <div class="col-md-3"></div>
                  <div class="col-md-4">
                      <div class="form-group ">
-                          <label for="groupName" class="form-label">Group Name</label>
+                          <label for="groupName" class="form-label">Group Name <span class="text-danger">*</span></label>
                           <input type="text" class="form-control" name="groupName" id="groupName" placeholder="Enter group name">
                      </div>
                  </div>

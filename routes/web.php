@@ -20,7 +20,7 @@ Route::get('/', 'WelcomeController@index');
 Route::get('/about-us.htm', 'WelcomeController@aboutUsPage');
 Route::get('/events.htm', 'WelcomeController@eventsPage');
 Route::get('/blogs.htm', 'WelcomeController@blogsPage');
-Route::get('/blogs-detail.htm/{param}', 'WelcomeController@blogsDeatilPage');
+Route::get('/blog-detail.htm/{param}', 'WelcomeController@blogsDeatilPage');
 Route::get('/ministries.htm', 'WelcomeController@ministriesPage');
 Route::get('/gallery.htm', 'WelcomeController@galleryPage');
 Route::get('/contact-us.htm', 'WelcomeController@contactusPage');
@@ -29,6 +29,13 @@ Route::get('/join-us.htm', 'WelcomeController@joinusPage');
 Route::post('/user-subscribe.htm', 'WelcomeController@addUserSubscription');
 Route::post('/post-enquiry.htm', 'WelcomeController@savePostEnquiry');
 
+ Route::get('/clear-cache', function() {
+         // $exitCode = Artisan::call('route:cache');
+          $exitCode = Artisan::call('config:cache');
+          $exitCode = Artisan::call('cache:clear');
+          $exitCode = Artisan::call('view:clear');
+         return 'Application cache cleared';
+     });
 
 Route::get('/cc', function () {
     Artisan::call('cache:clear');
@@ -73,17 +80,30 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
          Route::get('events', 'Admin\EventsController@index')->name('admin.events');
          Route::get('events/manage/{param?}', 'Admin\EventsController@manage');
          Route::post('events/save', 'Admin\EventsController@saveEvents');
-         Route::post('events/getdatatable', 'Admin\EventsController@getEventsDatatable');
+         Route::post('events/getdatatable/{param?}', 'Admin\EventsController@getEventsDatatable');
+         Route::post('events/getdatatable-past', 'Admin\EventsController@getEventsDatatablePast');
          Route::get('event/status/update/{id}/{status}', 'Admin\EventsController@statusUpdate');
          Route::post('events/mark-live', 'Admin\EventsController@statusMarkLive');
+          Route::post('events/mark-home-display', 'Admin\EventsController@homeDisplayMark');
          Route::get('event/getDesc/{id}', 'Admin\EventsController@showEventDescription');
          Route::get('event/delete/{id}', 'Admin\EventsController@deleteEvent');
+         
+         //ministreis
+         Route::get('ministries', 'Admin\MinistriesController@index')->name('admin.ministries');
+         Route::get('ministries/manage/{param?}', 'Admin\MinistriesController@manage');
+         Route::post('ministries/save', 'Admin\MinistriesController@saveMinistries');
+         Route::post('ministries/getdatatable', 'Admin\MinistriesController@getMinistriesDatatable');
+         Route::get('ministries/status/update/{id}/{status}', 'Admin\MinistriesController@statusUpdate');
+         Route::get('ministries/getDesc/{id}', 'Admin\MinistriesController@showMinistriesDescription');
+         Route::get('ministries/delete/{id}', 'Admin\MinistriesController@deleteMinistries');
          
           //Subscriber
          Route::get('subscribers', 'Admin\SubscribersController@index')->name('admin.subscribers');
          Route::post('subscribers/getdatatable', 'Admin\SubscribersController@getSubscribersDatatable');
          Route::get('subscriber/status/update/{id}/{status}', 'Admin\SubscribersController@statusUpdate');
          Route::get('subscriber/delete/{id}', 'Admin\SubscribersController@deleteSubscriber');
+         Route::post('subscribers/import', 'Admin\SubscribersController@importExcel');
+         
          
           //Groups
          Route::get('groups', 'Admin\GroupsController@index')->name('admin.groups');
@@ -107,6 +127,28 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
          Route::get('mail-box', 'Admin\MailerController@index')->name('admin.mailbox');
          Route::post('sendmail', 'Admin\MailerController@sendMail');
          Route::get('mail/get-group-mail/{id}', 'Admin\MailerController@getGroupMembers');
+         
+         //Site Settings
+         Route::get('settings', 'Admin\Setting@index')->name('admin.settings');
+         Route::post('settings/save-mail-setting', 'Admin\Setting@saveMailSettings');
+         Route::post('settings/update/site-setting', 'Admin\Setting@updateSiteSettings');
+         
+         //Galleries
+         Route::get('galleries', 'Admin\GalleriesController@index')->name('admin.galleries');
+         Route::post('galleries/save', 'Admin\GalleriesController@saveFile');
+         Route::get('galleries/delete/{id}', 'Admin\GalleriesController@deleteGallery');
+         
+         
+          //Collaborators
+         Route::get('collaborators', 'Admin\CollaboratorsController@index')->name('admin.collaborator');
+         Route::get('collaborators/manage/{param?}', 'Admin\CollaboratorsController@manage');
+         Route::post('collaborators/save', 'Admin\CollaboratorsController@saveCollaborators');
+         Route::post('collaborators/getdatatable', 'Admin\CollaboratorsController@getCollaboratorsDatatable');
+         Route::get('collaborator/status/update/{id}/{status}', 'Admin\CollaboratorsController@statusUpdate');
+         Route::get('collaborator/getDesc/{id}', 'Admin\CollaboratorsController@showCollaboratorDescription');
+         Route::get('collaborator/delete/{id}', 'Admin\CollaboratorsController@deleteCollaborator');
+         
+      //   Route::post('settings/save-mail-setting', 'Admin\Setting@saveMailSettings');
          
 });
 

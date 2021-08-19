@@ -3,14 +3,14 @@
 
   
     <header class="about-header">
-        <h1 class="hf1">Let's Join Hands Together!</h1>
+        <!--<h1 class="hf1">Let's Join Hands Together!</h1>-->
     </header>
 
 
     <div class="container joinus-container">
 
         <section class="newsletter">
-            <img src="{{asset('media/newsletter.png')}}">
+            <img src="{{asset('media/'.config('custom.newletter_icon'))}}">
             <h2 class="hf2">Subscribe to our <span>Newsletter</span> to get the Latest News</h2>
             <p class="bf">Fill in these details to get started...</p>
             <form id="subscriptionForm" action="#" enctype="multipart/form-data" method="POST">

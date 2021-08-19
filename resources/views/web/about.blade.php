@@ -2,8 +2,8 @@
 @section('content')
 
   
-    <header class="about-header">
-        <h1 class="hf1">Get to Know us a little better</h1>
+    <header class="about-header" style="background-image: url('./media/{{config('custom.page_header_about')}}');;background-position: center;background-repeat: no-repeat;">
+        <!--<h1 class="hf1">Get to Know us a little better</h1>-->
     </header>
 
 
@@ -17,7 +17,7 @@
             </div>
         </section>
 
-        <img class="aboutus-sep" src="{{asset('media/aboutus-section-img.png')}}">
+        <img class="aboutus-sep" src="{{asset('/media/'.config('custom.website_aboutus'))}}">
         <img class="aboutus-sep-mob" src="{{asset('aboutus-section-img - mob.png')}}">
 
         <section class="beliefs">
@@ -50,36 +50,14 @@
                 <h3 class="bf">Meet The Magicians Behind The Magic</h3>
             </div>
             <div class="collaborators">
+                @foreach($collaborators as $col)
                 <div class="collaborator">
-                    <img src="{{asset('media/collaborator.png')}}" alt="person" class="collabimg">
-                    <h4 class="bf collabname">Firstname Lastname</h4>
-                    <h4 class="bf collabprofile">Work Profile</h4>
+                    <img src="{{asset('images/'.$col->image)}}" alt="{{$col->name}}" class="collabimg">
+                    <h4 class="bf collabname">{{$col->name}}</h4>
+                    <h4 class="bf collabprofile">{{$col->title}}</h4>
                 </div>
-                <div class="collaborator">
-                    <img src="{{asset('media/collaborator.png')}}" alt="person" class="collabimg">
-                    <h4 class="bf collabname">Firstname Lastname</h4>
-                    <h4 class="bf collabprofile">Work Profile</h4>
-                </div>
-                <div class="collaborator">
-                    <img src="{{asset('media/collaborator.png')}}" alt="person" class="collabimg">
-                    <h4 class="bf collabname">Firstname Lastname</h4>
-                    <h4 class="bf collabprofile">Work Profile</h4>
-                </div>
-                <div class="collaborator">
-                    <img src="{{asset('media/collaborator.png')}}" alt="person" class="collabimg">
-                    <h4 class="bf collabname">Firstname Lastname</h4>
-                    <h4 class="bf collabprofile">Work Profile</h4>
-                </div>
-                <div class="collaborator">
-                    <img src="{{asset('media/collaborator.png')}}" alt="person" class="collabimg">
-                    <h4 class="bf collabname">Firstname Lastname</h4>
-                    <h4 class="bf collabprofile">Work Profile</h4>
-                </div>
-                <div class="collaborator">
-                    <img src="{{asset('media/collaborator.png')}}" alt="person" class="collabimg">
-                    <h4 class="bf collabname">Firstname Lastname</h4>
-                    <h4 class="bf collabprofile">Work Profile</h4>
-                </div>
+                @endforeach
+                
             </div>
         </section>
 

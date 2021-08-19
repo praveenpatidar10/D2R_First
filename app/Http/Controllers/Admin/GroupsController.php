@@ -56,9 +56,11 @@ class GroupsController extends Controller
         $totalRecords =  DB::table('usergroups')->count();
         $result=[];$i=1;
          foreach($brands as $each){
+                  $cnt =  Groupmember::where('group_id',$each->id)->count();
+                  $str = ($cnt)?'<span class="text-right">('.$cnt.' users)</span>':'';
                 $eachData=array();
                 $eachData['sno']          = "<strong>".$i."</strong>";
-                $eachData['group_name']        = $each->group_name;
+                $eachData['group_name']        = "<span class='text-left'>".$each->group_name."</span>&nbsp;".$str;
                 //$eachData['description']       = '<a data-title="'.$each->title.'" class="view-desc" href="#" id="'.$each->id.'">View Description</a>';
                 $eachData['status'] =($each->status=='Active')?'<span class="badge bg-success btn-status" data-title="'.$each->group_name.'" data-id="'.$each->id.'" data-status="'.$each->status.'">Active</span>'
                                                               :'<span class="badge bg-danger btn-status"  data-title="'.$each->group_name.'" data-id="'.$each->id.'" data-status="'.$each->status.'">Inactive</span>';
@@ -158,6 +160,7 @@ class GroupsController extends Controller
      public function deleteGroup(Request $request){
         
        Usergroup::where('id',$request->id)->delete();
+       Groupmember::where('group_id',$request->id)->delete();
       return Response::json(['status'=>'success','message'=>"Group successfully deleted "]);
     }
 }

@@ -7,6 +7,7 @@ $(function () {
              'X-CSRF-TOKEN': _token
          }
     });
+   
     
     
       var SUBSCRBIERTABLE = $('#subscribers-datatable').DataTable( {
@@ -111,6 +112,46 @@ $(function () {
           }
       });
  
+    });
+    
+    $("#ImportSubscriberForm").validate({
+        rules: {'import_file': { required: true }},
+        messages: {'import_file':{ required: "Choose csv file to import data"}},
+        errorPlacement: function(error, element) {error.insertAfter(element)},
+        submitHandler: function (form) {
+            $('#btn-save').html('<i class="fa fa-spinner fa-spin"></i> Loading');
+            $('#btn-save').prop('disabled', true);
+            $('#btn-save').attr('disabled', true);
+             var formData = new FormData($('#ImportSubscriberForm')[0]); 
+            $.ajax({
+                    type: 'POST',
+                    url: base_url+'/admin/subscribers/import/',
+                    data: formData,
+                    dataType: 'json',
+                    contentType: false,
+                    cache: false,
+                    processData:false,
+                    beforeSend: function(){
+                        $('#btn-save').prop('disabled', true);
+                        $('#btn-save').attr('disabled', true);
+                    },
+                    success: function(result){ //console.log(response);
+                                 $('#btn-save').prop('disabled', false);
+                                 $('#btn-save').attr('disabled', false);
+                                 $('#btn-save').html('Loading..');
+                                 
+                            if($.trim(result.status)=='success'){
+                                toastr.success(result.message, 'Success');
+                                 SUBSCRBIERTABLE.ajax.reload();
+                            }else{
+                                toastr.error(result.message, 'Error');
+                            }
+                    }
+                });
+            
+            return false;
+        }
+
     });
    
   

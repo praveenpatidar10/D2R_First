@@ -1,18 +1,44 @@
 @extends('layouts.web')
 @section('content')
   
-    <header class="about-header">
-        <h1 class="hf1">Explore All Events!</h1>
+    <header class="about-header" style="background-image: url('./media/{{config('custom.page_header_event')}}');;background-position: center;background-repeat: no-repeat;">
+        <!--<h1 class="hf1">Explore All Events!</h1>-->
     </header>
+<style>
+ .box {
+  position: relative;
+ }
 
+
+.live-ribbon{
+    position: absolute;
+    transition: .3s ease;
+    bottom: 10px;
+    right: 5px;
+    color: #fff;
+    border: 1px solid #ff0202;
+    font-size: 13px;
+    padding: 0px 10px;
+    border-radius: 11px;
+    background-color: #ff0202;
+}
+
+</style>
 
     <div class="container events-container">
         
         <?php  $count = 1; ?>
           @foreach($events as $event)
               <?=($count%4 == 1)?'<div class="events-wrapper">':'';?>
-                   <div class="event-wrapper">
+                   <div class="event-wrapper @if($event->status=='Live') box @endif">
+                       
+                         <!--<div class="ribbon"><span>Live</span></div>-->
+                         
+                        
                         <a href="#openModal{{$event->id}}" class="event-square">
+                             @if($event->status=='Live')
+                            <span class="live-ribbon">Live</span>
+                             @endif
                             <img src="{{asset('images/'.$event->image)}}" alt="{{$event->title}}">
                             <h3 class="bf">{{$event->title}}</h3>
                         </a>
@@ -32,7 +58,9 @@
                                     echo $html;?>
                                     </h3>
                                 @if($event->status=='New')
-                                <a  target="_blank" href="{{$event->link}}" class="bf event-register">Register</a>
+                                 <a  target="_blank" href="{{$event->link}}" class="bf event-register">Register</a>
+                                @else
+                                 <a  target="_blank" href="{{$event->youtube_link}}" class="bf event-register">View</a>
                                 @endif
                             </div>
                         </div>
@@ -213,17 +241,20 @@
         <section class="contactus" style="background-color: #dce0df;">
             <div class="contactus-title"><h2 class="hf2">Wanna Know More?</h2></div>
             <div class="contactus-content">
-                <img src="{{asset('media/events-section-img.png')}}">
+                <img src="{{asset('media/'.config('custom.contact_left_image'))}}">
                 <div class="form">
                     <p class="bf">Drop In Your Details And Leave Us A Message...</p>
-                    <div class="ipfields">
-                        <div class="subdetails">
-                            <input type="text" class="bf email" placeholder="Your E-mail Address">
-                            <input type="text" class="bf name" placeholder="Your Name">
+                  <form id="contactUsForm" action="#" enctype="multipart/form-data" method="POST">
+                     @csrf
+                        <div class="ipfields">
+                            <div class="subdetails">
+                                <input type="text" id="_contactEmail" name="_contactEmail"  class="bf email" placeholder="Your E-mail Address">
+                                <input type="text" id="_contactName" name="_contactName" class="bf name" placeholder="Your Name">
+                            </div>
+                            <textarea class="bf joinmsg" id="_contactDesc" name="_contactDesc" cols="30" rows="5" placeholder="What would you like to know?"></textarea>
+                            <button type="submit" class="_contactusButton bf">Submit</button>
                         </div>
-                        <textarea class="bf joinmsg" cols="30" rows="5" placeholder="What would you like to know?"></textarea>
-                        <a class="bf" href="#">Submit</a>
-                    </div>
+                     </form>
                 </div>
             </div>
         </section>

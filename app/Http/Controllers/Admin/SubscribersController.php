@@ -9,6 +9,8 @@ use DB;
 use App\Model\Subscriber;
 use Carbon\Carbon;
 use DateTime;
+use App\Imports\SubscribersImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SubscribersController extends Controller
 {
@@ -31,6 +33,17 @@ class SubscribersController extends Controller
         $templete=['title'=>'Subscribers','subtitle'=>'List Subscribers','Link'=>'subscriber','scripts'=>[asset('admin/dist/js/pages/subscribers.js')]];
         return view('admin.subscribers.list',$templete);
     }
+    
+    public function importExcel(Request $request)
+    {
+        if($request->hasFile('import_file')){
+           Excel::import(new SubscribersImport, $request->file('import_file')->store('temp'));
+           return Response::json(['status'=>'success','message'=>"Subscriber import successfully "]);
+        }else{
+         return Response::json(['status'=>'error','message'=>"Please choose file."]);
+        }
+    }
+
     
     
     public function getSubscribersDatatable(Request $request){
@@ -64,7 +77,7 @@ class SubscribersController extends Controller
                 $eachData['sno']          = "<strong>".$i."</strong>";
                 $eachData['name']        = $each->name;
                 $eachData['email']        = $each->email;
-                $eachData['group']        = '-';
+                $eachData['group']        = '<span class="badge bg-primary">'.$each->source_type.'</span>';
                 $eachData['status'] =($each->status=='Active')?'<span class="badge bg-success btn-status" data-email="'.$each->email.'" data-id="'.$each->id.'" data-status="'.$each->status.'">Active</span>'
                                                               :'<span class="badge bg-danger btn-status"  data-email="'.$each->email.'" data-id="'.$each->id.'" data-status="'.$each->status.'">Inactive</span>';
                 $eachData['action']          = '<div class="btn-group">

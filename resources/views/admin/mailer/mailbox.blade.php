@@ -21,7 +21,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="groupId">Choose Goup</label>
+                                        <label for="groupId">Choose Goup <span class="text-danger">*</span></label>
                                         <select name="groupId"  id="groupId" class="select2 select2-hidden-accessible"  data-placeholder="Select a Group" data-dropdown-css-class="select2-purple" style="width: 100%;"  aria-hidden="true">
                                               <option value="">Select</option>
                                               @foreach($groups as $group)
@@ -32,7 +32,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="tempId">Choose Email Template</label>
+                                        <label for="tempId">Choose Email Template <span class="text-danger">*</span></label>
                                         <select   name="tempId"  id="tempId" class="select2 select2-hidden-accessible"  data-placeholder="Select a Template" data-dropdown-css-class="select2-purple" style="width: 100%;"  aria-hidden="true">
                                              <option value="">Select</option>
                                               @foreach($templates as $tm)

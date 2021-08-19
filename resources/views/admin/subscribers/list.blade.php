@@ -19,6 +19,22 @@
                       </div>
                       <!-- /.card-header -->
                       <div class="card-body">
+                         <form id="ImportSubscriberForm" action="{{url('admin/subscribers/import/')}}" enctype="multipart/form-data" method="POST">
+                           @csrf
+                           <div class="row">
+                               <div class="col-md-6" style="text-align:right">
+                                   <label for="import_file" style="padding: 6px;">Choose File to import<span class="text-danger">*</span></label>
+                               </div>
+                               <div class="col-md-4">
+                                   <div class="form-group">
+                                    <input type="file" class="form-control" id="import_file" name="import_file" placeholder="Choose File" >
+                                  </div>
+                               </div>
+                                <div class="col-md-2"><button id="btn-save" style="" type="submit" class="btn btn-success">import</button></div>
+                           </div>
+                           
+                            
+                        </form>
                          <table class="table filter-table ">
                             <tbody><tr>
                                 <td style="width:40%"></td>
@@ -43,7 +59,7 @@
                               <th>#</th>
                               <th>Name</th>
                               <th>Email</th>
-                              <th>Group</th>
+                              <th>Source</th>
                               <th>Status</th>
                               <th>Action</th>
                             </tr>

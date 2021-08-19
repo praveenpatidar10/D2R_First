@@ -1,8 +1,8 @@
 @extends('layouts.web')
 @section('content')
 
- <header class="about-header">
-        <h1 class="hf1">We'd love to hear from You!</h1>
+ <header class="about-header" style="background-image: url('./media/{{config('custom.page_header_contactus')}}');;background-position: center;background-repeat: no-repeat;">
+        <!--<h1 class="hf1">We'd love to hear from You!</h1>-->
     </header>
 
 
@@ -11,7 +11,7 @@
         <section class="contactus" style="background-color: #dce0df;">
             <div class="contactus-title"><h2 class="hf2">Wanna Know More?</h2></div>
             <div class="contactus-content">
-                <img src="{{asset('media/events-section-img.png')}}">
+                <img src="{{asset('/media/'.config('custom.contact_left_image'))}}">
                 <div class="form">
                     <p class="bf">Drop In Your Details And Leave Us A Message...</p>
                     <form id="contactUsForm" action="#" enctype="multipart/form-data" method="POST">

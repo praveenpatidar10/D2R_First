@@ -26,7 +26,8 @@
   <link rel="stylesheet" href="{{asset('admin/plugins/summernote/summernote-bs4.css')}}" type="text/css">
     <link rel="stylesheet" href="{{asset('admin/plugins/select2/css/select2.min.css')}}" type="text/css">
    <!-- DataTables -->
-   
+   <!-- Ekko Lightbox -->
+  <link rel="stylesheet" href="{{asset('admin/plugins/ekko-lightbox/ekko-lightbox.css')}}">
   <link rel="stylesheet" href="{{asset('admin/plugins/datatables-bs4/css/dataTables.bootstrap4.css')}}" type="text/css">
   <link rel="stylesheet" href="{{asset('js/toastr/toastr.min.css')}}" type="text/css">
   <link rel="stylesheet" href="{{asset('js/confirm/css/jquery-confirm.css')}}" type="text/css">
@@ -35,9 +36,12 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <style>
       .error{
-          color: red;
-font-size: 14px;
-font-weight: normal;
+            color: red;
+            font-size: 14px;
+            font-weight: normal;
+        }
+      .jconfirm .jconfirm-box div.jconfirm-content-pane .jconfirm-conten{
+          overflow-x: hidden !important;
       }
   </style>
 </head>
@@ -111,9 +115,27 @@ font-weight: normal;
             </a>
           </li>
           <li class="nav-item">
+            <a href="{{url('admin/collaborators')}}" class="nav-link <?=($Link=='collaborators')?'active':'';?>">
+              <i class="nav-icon far fa-user"></i>
+              <p class="text">Collaborators Management</p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="{{url('admin/subscribers')}}" class="nav-link <?=($Link=='subscriber')?'active':'';?>">
               <i class="nav-icon far fa-user"></i>
               <p class="text">Subscriber Management</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{url('admin/ministries')}}" class="nav-link <?=($Link=='ministries')?'active':'';?>">
+              <i class="nav-icon fas fa-hand-holding-heart"></i>
+              <p class="text">Ministries Management</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{url('admin/galleries')}}" class="nav-link <?=($Link=='galleries')?'active':'';?>">
+              <i class="nav-icon fas fa-images"></i>
+              <p class="text">Gallery Management</p>
             </a>
           </li>
           <li class="nav-item">
@@ -132,6 +154,12 @@ font-weight: normal;
             <a href="{{url('admin/mail-box')}}" class="nav-link">
               <i class="nav-icon fas fa-mail-bulk"></i>
               <p>Send Mail</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{url('admin/settings')}}" class="nav-link <?=($Link=='settings')?'active':'';?>">
+              <i class="nav-icon fas fa-cogs"></i>
+              <p>Settings</p>
             </a>
           </li>
           

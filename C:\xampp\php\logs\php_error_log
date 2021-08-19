@@ -1,2 +1,5 @@
 [15-Jul-2021 06:38:22 UTC] PHP Fatal error:  Class 'App\Http\Controllers\Admin\Controller' not found in /home/redboxte/public_html/fmhc/app/Http/Controllers/Admin/HomeController.php on line 7
 [15-Jul-2021 11:36:37 UTC] PHP Fatal error:  Cannot use empty array elements in arrays in /home/redboxte/public_html/fmhc/app/Http/Controllers/Admin/BlogsController.php on line 32
+[05-Aug-2021 07:49:48 UTC] PHP Fatal error:  Cannot use Excel as Excel because the name is already in use in /home/redboxte/public_html/fmhc/app/Http/Controllers/Admin/SubscribersController.php on line 14
+[05-Aug-2021 07:52:13 UTC] PHP Fatal error:  Cannot use App\Model\Subscriber as Subscriber because the name is already in use in /home/redboxte/public_html/fmhc/app/Imports/SubscribersImport.php on line 6
+[13-Aug-2021 07:57:58 UTC] PHP Fatal error:  Cannot use File as File because the name is already in use in /home/redboxte/public_html/fmhc/app/Http/Controllers/Admin/Setting.php on line 10

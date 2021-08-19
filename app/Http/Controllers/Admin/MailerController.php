@@ -52,31 +52,25 @@ class MailerController extends Controller
     function sendMail(Request $request){
                $emailTemp = Template::where(['id'=>$request->tempId])->first();
                $members=   Groupmember::where(['group_id'=>$request->groupId])->get();
-               $subject = $emailTemp->title;
+               //$subject = $emailTemp->title;
                foreach($members as $each){
                    $member  = Subscriber::where('id',$each->member_id)->first();
                    $findArr = ["{subscriber_name}","{subscriber_email}"];
                    $rplcArr = [$member->name,$member->email];
                    $body = str_replace($findArr,$rplcArr,$emailTemp->description);
+                   $subject = str_replace($findArr,$rplcArr,$emailTemp->title);
                    $to_name = $member->name;
                    $to_email = $member->email;
                    $data = array('body'=>$body,'subject'=>$subject);
                     Mail::send('admin.templates.mail_frame', $data, function($message) use ($to_name, $to_email,$subject) {
                       $message->to($to_email, $to_name)
                               ->subject($subject);
-                     $message->from("prnpatidar@gmail.com",'DFB CENTERAL');
+                     //$message->from("prnpatidar@gmail.com",'DFB CENTERAL');
                     });
                     
-                    // if( count(Mail::failures()) > 0 ){
-                    //     echo 'There seems to be a problem. Please try again in a while'; 
-                    //     return Response::json(['status'=>'error','message'=>'Invalid access']);
-                    // }else{                      
-                    //   echo 'Thanks for your message. Please check your mail for more details!'; 
-                     
-                    // }
+
                }
-                 
-                  return Response::json(['status'=>'success','message'=>'Email sent successfully']);  
+            return Response::json(['status'=>'success','message'=>'Email sent successfully']);  
     }
     
 }

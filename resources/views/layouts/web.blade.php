@@ -23,11 +23,12 @@
         .has-error{
             border-color: #f43c3c !important;
         }
+        
     </style>
 </head>
 <body>
     <nav id="navbar" class="navbar">
-        <a href="{{url('/')}}" class="logo-a"><img src="{{asset('media/logo.png')}}" alt="logo" class="logo-i"></a>
+        <a href="{{url('/')}}" class="logo-a"><img src="{{asset('/media/'.config('custom.website_logo'))}}" alt="logo" class="logo-i"></a>
         <ul class="nav-list">
             <li class="navf nav-item"><a class="@if($Link=='home') active-page @endif" href="{{url('/')}}">Home</a></li>
             <li class="navf nav-item"><a class="@if($Link=='about') active-page @endif" href="{{url('/about-us.htm')}}">About Us</a></li>
@@ -56,25 +57,26 @@
     </nav>
       @yield('content')
     <footer>
-        <div class="instagramfeed">
-            <a href="https://www.instagram.com/dbfcentral/" class="hf2">Our Latest Posts on Instagram</a>
+        <div class="instagramfeed" style="background: #F3F1F5;">
+            <a href="https://www.instagram.com/dbfcentral/" class="hf2" style="color: #000;">Our Latest Posts on Instagram</a>
             <div id="instagramfeedPlaceholder"></div>
             <script src="https://cdn.jsdelivr.net/gh/stevenschobert/instafeed.js@2.0.0rc1/src/instafeed.min.js"></script>
             <script src="{{asset('js/instagramFeed.js')}}"></script>
         </div>
-        <div>
+        <div class="footer-section">
             <div class="logo">
-                <img src="{{asset('media/logo.png')}}" alt="Logo">
+                <img src="{{asset('/media/'.config('custom.website_logo'))}}" alt="Logo">
                 <div class="social">
                     <h2 class="hf2">Don't forget to Follow us at</h2>
                     <div class="links">
-                        <a class="follow" href="https://www.youtube.com/user/CDCTeaching/videos" target="_blank" style="margin: 0 15% 0 0;"><i class="fab fa-youtube"></i></a>
-                        <a class="follow" href="https://www.instagram.com/dbfcentral/" target="_blank" style="margin: 0 5% 0 15%;"><i class="fab fa-instagram"></i></a>
-                        <a class="follow" href="https://www.facebook.com/DBFCDC" target="_blank" style="margin: 0 15% 0 35%;"><i class="fab fa-facebook-square"></i></a>
-                        <a class="follow" href="https://twitter.com/DBFCDC" target="_blank" style="margin: 0 0 0 40%;"><i class="fab fa-twitter"></i></a>
+                        <a class="follow" href="{{config('custom.youtube_link')}}" target="_blank" style="margin: 0 15% 0 0;"><i class="fab fa-youtube"></i></a>
+                        <a class="follow" href="{{config('custom.insta_link')}}" target="_blank" style="margin: 0 5% 0 15%;"><i class="fab fa-instagram"></i></a>
+                        <a class="follow" href="{{config('custom.facebook_link')}}" target="_blank" style="margin: 0 15% 0 35%;"><i class="fab fa-facebook-square"></i></a>
+                        <a class="follow" href="{{config('custom.twitter_link')}}" target="_blank" style="margin: 0 0 0 40%;"><i class="fab fa-twitter"></i></a>
                     </div>
                 </div>
             </div>
+         
             <div class="support">
                 <h2 class="hf2">Support</h2>
                 <ul class="footer-list">
@@ -89,7 +91,7 @@
             </div>
             <div class="address">
                 <h2 class="hf2">Get in Touch!</h2>
-                <address><h3 class="bf">011-23342732<br>centraloffice@dbfcentral.org<br><br>22, Bhai Vir Singh Marg, Gole Market, New Delhi - 110001</h3></address>
+                <address><h3 class="bf">{{config('custom.contact_phone')}}<br>{{config('custom.contact_email')}}<br><br>{{config('custom.contact_address')}}</h3></address>
             </div>
         </div>
         <div class="copyright">

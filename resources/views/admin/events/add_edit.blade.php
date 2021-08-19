@@ -16,7 +16,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="title">Event Title</label>
+                                <label for="title">Event Title <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="title" name="title" placeholder="Enter event title" value="{{isset($event)?$event->title:''}}">
                           </div>
                         </div>
@@ -25,14 +25,14 @@
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="eventDateTime">Event Date</label>
+                                <label for="eventDateTime">Event Date <span class="text-danger">*</span></label>
                                 
                                 <input type="text" class="form-control" id="eventDateTime" name="eventDateTime" placeholder="Enter event date" value="{{isset($event)?$dateTime:''}}">
                           </div>
                         </div>
                         <div class="col-md-4">
                              <div class="form-group">
-                                <label for="eventImage">Image</label>
+                                <label for="eventImage">Image @if(!isset($event))<span class="text-danger">*</span>  @endif</label>
                                 <div class="input-group">
                                   <div class="custom-file">
                                     <input type="file" class="custom-file-input" id="eventImage" name="eventImage">
@@ -43,7 +43,7 @@
                         </div>
                         <div class="col-md-5">
                             <div class="form-group">
-                                <label for="eventLink">Event link</label>
+                                <label for="eventLink">Register link  <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="eventLink" name="eventLink" placeholder="Enter event link" value="{{isset($event)?$event->link:''}}">
                           </div>
                         </div>
@@ -54,7 +54,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="title">Live Url</label>
+                                <label for="title">Live Url  <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="YouTubeUrl" name="YouTubeUrl" placeholder="Enter YouTube Url" value="{{isset($event)?$event->youtube_link:''}}">
                           </div>
                         </div>
@@ -68,13 +68,22 @@
                           </div>
                         </div>
                     </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="title">Recording Url</label>
+                                <input type="text" class="form-control" id="recordUrl" name="recordUrl" placeholder="Enter Recording Url" value="{{isset($event)?$event->recording_link:''}}">
+                          </div>
+                        </div>
+                    </div>
                     @endif
                     @endisset
                     
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="description">Description</label>
+                                <label for="description">Description  <span class="text-danger">*</span></label>
                                                 <textarea class="textarea summernote" placeholder="Place some text here" name="description" id="description"
                                                         style="width: 100%; height:400px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{isset($event)?(html_entity_decode($event->description)):''}}</textarea>
                               </div>

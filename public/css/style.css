@@ -17,15 +17,35 @@
 /*FONTS*/
 @font-face {
     font-family: headingFont1;
-    src: url(../fonts/Faith\ And\ Glory\ One.ttf);
+    src: url(../fonts/Faith\And\Glory\One.ttf);
+}
+
+@font-face{
+  font-family: poppins-bold;
+  src: url(../fonts/Poppins-Bold.ttf);
+}
+@font-face {
+  font-family: poppins-medium;
+  src: url(../fonts/Poppins-Medium.ttf);
+}
+@font-face{
+  font-family: poppins-light;
+  src: url(../fonts/Poppins-Light.ttf);
+}
+@font-face{
+  font-family: poppins-regular;
+  src: url(../fonts/Poppins-Regular.ttf);
 }
 
 .hf1{
-    font-family: headingFont1;
+    /*font-family: headingFont1;*/
+    font-family: poppins-bold;
 }
 
 .hf2{
-    font-family: var(--font-h);
+    /*font-family: var(--font-h);*/
+    font-family: poppins-medium;
+    
 }
 
 .navf{
@@ -33,7 +53,8 @@
 }
 
 .bf{
-    font-family: var(--font-b);
+    /*font-family: var(--font-b);*/
+    font-family: poppins-regular
 }
 
 /*MOBILE ZOOM*/
@@ -311,10 +332,17 @@ footer{
     align-items: center;
     min-height: 50vh;
     color: white;
+    /*background-image: url('../media/footerbg-2.png');*/
+    /*background-position: center;*/
+    /*background-repeat: no-repeat;*/
+    /*background-size: cover;*/
+}
+footer .footer-section{
     background-image: url('../media/footerbg-2.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    /*margin-top: 20px;*/
 }
 
 footer div{
@@ -348,6 +376,7 @@ footer #instagramfeedPlaceholder{
     grid-row-gap: 4%;
     width: 100vw;
     margin: auto;
+    padding-bottom: 30px;
 }
 
 footer #instagramfeedPlaceholder a{
@@ -951,7 +980,8 @@ svg#bigTriangleColor{
     position: absolute;
     left: 30px;
     bottom: 30px;
-    max-width: 400px;
+    /*max-width: 400px;*/
+    max-width: 100%;
     padding: 20px;
     border-radius: 5px;
     background-color: rgba(0, 0, 0, 0.6);
@@ -959,6 +989,7 @@ svg#bigTriangleColor{
     z-index: 4;
     visibility: hidden;
     opacity: 0;
+    width: 40%;
 }
 
 .flexbox-slider .flexbox-slide .text-block h3 {

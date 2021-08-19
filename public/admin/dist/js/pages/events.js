@@ -164,6 +164,50 @@ $(function () {
         var v =$(this).val();  // getting search input value
         EVENTTABLE.columns(i).search(v).draw();
    });
+   
+   
+    var EVENTTABLEPast = $('#events-datatable-past').DataTable( {
+        "scrollX": false,
+         bLengthChange: false,
+         responsive: true,
+        "order": [[0, "desc" ]],
+        "autoWidth": false,
+                "processing": true,
+                 "serverSide": true,
+               "ajax": {
+                    "url": base_url+"/admin/events/getdatatable-past",
+                     "type": "POST",
+                },
+                "columns": [
+                    { "data": "sno"},
+                    {"data" : "title", "className":'text-center'},
+                    {"data" : "link", "className":'text-center'},
+                     {"data" : "recordlink", "className":'text-center'},
+                    {"data" : "eventDate", "className":'text-center'},
+                    {"data" : "description","orderable":false , "className":'text-center'},
+                    {"data" : "status","orderable":false , "className":'text-center'},
+                    { "data": "action" ,"orderable":false, "className":'text-center'}
+                ],
+                "columnDefs": [
+                    { "width": "5%", "targets": 0 },
+                    { "width": "25%", "targets": 1 },
+                    { "width": "10%", "targets": 2 },
+                    { "width": "15%", "targets": 3 },
+                    { "width": "10%", "targets": 4},
+                    { "width": "10%", "targets": 5},
+                    { "width": "10%", "targets": 6},
+                    { "width": "10%", "targets": 7},
+                 
+                  ],
+            } );
+ 
+    $('.search-input-text-past').on( 'keyup change', function () {   // for text boxes
+        var i =$(this).attr('data-column');  // getting column index
+        var v =$(this).val();  // getting search input value
+        EVENTTABLEPast.columns(i).search(v).draw();
+   });
+   
+   
    $('body').on('click','.view-desc',function(e){
       var id = $(this).attr('id'); 
        var title = $(this).attr('data-title'); 
@@ -245,6 +289,8 @@ $(function () {
                             $.post(base_url+"/admin/events/mark-live/",{id:id,_url:input.val()},function(resp) {
                                 if($.trim(resp.status)=='success'){
                                        toastr.success(resp.message, 'Success');
+                                       $('#markHomeDisplay').empty();
+                                       $('#markHomeDisplay').html(resp.html);
                                        EVENTTABLE.ajax.reload();
                                 }else{
                                   toastr.error(resp.message, 'Error');
@@ -288,6 +334,17 @@ $(function () {
       });
  
     });
+    
+     $('body').on('click','#btnHomeDisplay',function(e){
+         var val = $('#markHomeDisplay').val();
+         $.post(base_url+"/admin/events/mark-home-display/",{val:val},function(resp) { 
+             if($.trim(resp.status)=='success'){
+                 toastr.success(resp.message, 'Success');
+                }else{
+                  toastr.error(resp.message, 'Error');
+                }
+         },'json');
+     })
    
   
 });
