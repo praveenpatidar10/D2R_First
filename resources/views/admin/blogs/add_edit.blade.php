@@ -22,18 +22,31 @@
                                     <textarea class="textarea summernote" placeholder="Place some text here" name="description" id="description"
                           style="width: 100%; height:400px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{isset($blog)?(html_entity_decode($blog->description)):''}}</textarea>
                   </div>
-                  <div class="form-group">
-                    <label for="blogImage">Image  @if(!isset($blog))<span class="text-danger">*</span>  @endif</label>
-                    <div class="input-group">
-                      <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="blogImage" name="blogImage">
-                        <label class="custom-file-label" for="blogImage">Choose file</label>
-                      </div>
-                      <!--<div class="input-group-append">-->
-                      <!--  <span class="input-group-text" id="">Upload</span>-->
-                      <!--</div>-->
-                    </div>
+                  <div class="row">
+                      <div class="col-md-6">
+                             <div class="form-group">
+                                <label for="blogImage">Image(1200X500) @if(!isset($blog))<span class="text-danger">*</span>  @endif</label>
+                                <div class="input-group">
+                                  <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="blogImage" name="blogImage">
+                                    <label class="custom-file-label" for="blogImage">Choose file</label>
+                                  </div>
+                                </div>
+                              </div>
+                        </div>
+                        <div class="col-md-6">
+                             <div class="form-group">
+                                <label for="blogThumbnail">Thumbnail Image(450X450) @if(!isset($blog))<span class="text-danger">*</span>  @endif</label>
+                                <div class="input-group">
+                                  <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="blogThumbnail" name="blogThumbnail">
+                                    <label class="custom-file-label" for="blogThumbnail">Choose file</label>
+                                  </div>
+                                </div>
+                              </div>
+                        </div>
                   </div>
+                  
                   
                 </div>
                 <!-- /.card-body -->

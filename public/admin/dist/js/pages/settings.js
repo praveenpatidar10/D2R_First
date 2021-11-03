@@ -83,6 +83,21 @@ $(function () {
         ajaxFormPost(formData,'/admin/settings/update/site-setting/','logo')
    })
    
+   
+   $("#upload-button-satsang_logo").on('click', function(e) {
+         e.preventDefault();
+      $(".file-upload-satsang_logo").click();
+   });
+   
+   $(".file-upload-satsang_logo").on('change', function(){ 
+        var formData = new FormData($('#form-upload-satsang_logo')[0]); 
+        formData.append('column','satsang_logo');
+        //console.log(formData);
+        ajaxFormPost(formData,'/admin/settings/update/site-setting/','satsang_logo')
+   })
+   
+   
+   
    $("#upload-button-homeVideo").on('click', function(e) {
          e.preventDefault();
       $(".file-upload-homeVideo").click();

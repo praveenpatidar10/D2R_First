@@ -16,9 +16,9 @@
                 We exist to Cultivate Christ centred Communities to Redeem Delhi & beyond for the glory of God                
             </div>
         </section>
-
-        <img class="aboutus-sep" src="{{asset('/media/'.config('custom.website_aboutus'))}}">
-        <img class="aboutus-sep-mob" src="{{asset('aboutus-section-img - mob.png')}}">
+        <svg id="bigTriangleColor" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100" viewBox="0 0 100 102" preserveAspectRatio="none">
+            <path d="M0 0 L50 100 L100 0 Z" />
+        </svg>
 
         <section class="beliefs">
             <div class="beliefs-title">
@@ -42,28 +42,14 @@
                     <li>We believe that all the saved should love in such a manner as will honour and glorify and not bring reproach upon their Saviour and Lord and that it is commended of God to remain separate from false doctrines, and sinful pleasures, practices and associations.</li>
                 </ul>
             </div>
+            <svg id="ABOUTbigTriangleColor" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100" viewBox="0 0 100 102" preserveAspectRatio="none">
+                <path d="M0 0 L50 100 L100 0 Z" />
+            </svg>
         </section>
-
-        <section class="collab">
-            <div class="collab-title">
-                <h2 class="hf2">Collaborators</h2>
-                <h3 class="bf">Meet The Magicians Behind The Magic</h3>
-            </div>
-            <div class="collaborators">
-                @foreach($collaborators as $col)
-                <div class="collaborator">
-                    <img src="{{asset('images/'.$col->image)}}" alt="{{$col->name}}" class="collabimg">
-                    <h4 class="bf collabname">{{$col->name}}</h4>
-                    <h4 class="bf collabprofile">{{$col->title}}</h4>
-                </div>
-                @endforeach
-                
-            </div>
-        </section>
-
-        <section class="newsletter" style="background-color: #dce0df;">
+        
+        <section class="newsletter" style="background-color: #ffffff; margin-top: 20%;">
             <img src="{{asset('media/newsletter-2.png')}}">
-            <h2 class="hf2">Be One of Us!</h2>
+            <h2 class="hf2">Sign up for our Newsletter!</h2>
             <p class="bf">Fill in these details to get started...</p>
             <form id="subscriptionForm" action="#" enctype="multipart/form-data" method="POST">
                  @csrf
@@ -77,6 +63,8 @@
             </form>
             <p class="bf">We won't share your data without your permission. Your secret's safe with us!</p>
         </section>
-
+        <svg id="ABOUTbigTriangleColor" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100" viewBox="0 0 100 102" preserveAspectRatio="none" style="background: white; ">
+            <path d="M0 0 L50 100 L100 0 Z" />
+        </svg>
     </div>
 @endsection

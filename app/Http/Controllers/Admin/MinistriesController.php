@@ -94,29 +94,56 @@ class MinistriesController extends Controller
         
         if(isset($request->id)){
             $ministries = Ministries::find($request->id);
+            
+            $error = false;
             if($request->hasFile('ministriesImage')){
-                $image_path = "public/images/".$ministries->image;
-                if(File::exists($image_path)) { File::delete($image_path); }
+                $Size = getimagesize(request()->ministriesImage);
+                $_width = $Size[0];$_height = $Size[1];
+                $error = ($_width==1000 && $_height==500)?false:true;
+            }
+            
+            if($error==true){
+                 return Response::json(['status'=>'error','param'=>'Updated','message'=>'Incorrect image size for image ,please enter image with size(1000*500)']);
+            }else{
+                if($request->hasFile('ministriesImage')){
+                    $image_path = "public/images/".$ministries->image;
+                    if(File::exists($image_path)) { File::delete($image_path); }
+                    $fileName = 'Ministries-'.uniqid().'.'.request()->ministriesImage->getClientOriginalExtension();
+                    $request->ministriesImage->move('public/images/', $fileName);
+                    $ministries->image=$fileName;
+                }
+                $ministries->title= $request->title;
+                $ministries->description= htmlentities($_POST['description']);
+                $ministries->save();
+                $msg = "Updated";  
+                return Response::json(['status'=>'success','param'=>$msg,'message'=>'Ministries '.$msg.' successfully.']);
+            }
+        }else{
+            
+                $error = false;
+                if($request->hasFile('ministriesImage')){
+                    $Size = getimagesize(request()->ministriesImage);
+                    $_width = $Size[0];$_height = $Size[1];
+                    $error = ($_width==1000 && $_height==500)?false:true;
+                }
+                
+                if($error==true){
+                     return Response::json(['status'=>'error','param'=>'Created','message'=>'Incorrect image size for image ,please enter image with size(1000*500)']);
+                }else{
+                
+                $ministries = new Ministries;
+                $ministries->title= $request->title;
+                $ministries->description= htmlentities($_POST['description']);
+                
                 $fileName = 'Ministries-'.uniqid().'.'.request()->ministriesImage->getClientOriginalExtension();
                 $request->ministriesImage->move('public/images/', $fileName);
                 $ministries->image=$fileName;
+                $ministries->save();
+                $msg = "Created";
+                return Response::json(['status'=>'success','param'=>$msg,'message'=>'Ministries '.$msg.' successfully.']);
             }
-            $ministries->title= $request->title;
-            $ministries->description= htmlentities($_POST['description']);
-            $ministries->save();
-            $msg = "Updated";
-        }else{
-            $ministries = new Ministries;
-            $ministries->title= $request->title;
-            $ministries->description= htmlentities($_POST['description']);
-            
-            $fileName = 'Ministries-'.uniqid().'.'.request()->ministriesImage->getClientOriginalExtension();
-            $request->ministriesImage->move('public/images/', $fileName);
-            $ministries->image=$fileName;
-            $ministries->save();
-            $msg = "Created";
         }
-        return Response::json(['status'=>'success','param'=>$msg,'message'=>'Ministries '.$msg.' successfully.']);
+       
     }
     
     

@@ -1,5 +1,12 @@
 @extends('layouts.web')
 @section('content')
+@if(isset($subtitle))
+    @if($subtitle=='Home')
+        <?php  if($hasSession=='No'){ ?>
+             @include('web.confirmPage')
+        <?php }?>
+    @endif
+@endif
 
  <header>
         <video autoplay muted loop id="bgv">
@@ -21,7 +28,7 @@
             </div>
         </section>
         
-        <svg id="bigTriangleColor" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100" viewBox="0 0 100 102" preserveAspectRatio="none">
+        <svg id="CONTACTbigTriangleColor" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100" viewBox="0 0 100 102" preserveAspectRatio="none">
             <path d="M0 0 L50 100 L100 0 Z" />
         </svg>
         @if($homeeventcount)
@@ -92,12 +99,14 @@
                     <input type="text" id="_subEmail" name="_subEmail" class="bf email" placeholder="Your E-mail Address">
                     <input type="text" id="_subName" name="_subName" class="bf name" placeholder="Your Name">
                 </div>
-                <button type="submit"  class="_subsButton bf" href="#">Subscribe!</button>
+                <button type="submit"  class="_subsButton bf btnSubmitForm" href="#">Subscribe!</button>
             </div>
             </form>
             <p class="bf">We won't share your data without your permission. Your secret's safe with us!</p>
         </section>
-
+        <svg id="CONTACTbigTriangleColor" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100" viewBox="0 0 100 102" preserveAspectRatio="none" style="background: white; ">
+            <path d="M0 0 L50 100 L100 0 Z" />
+        </svg>
     </div>
 
 @endsection

@@ -6,8 +6,13 @@
         <!--<h1 class="hf1">DBF Central's Memoir!</h1>-->
     </header>
 
+    <h1 class="trianglesection" style="background: #13a1e3; width: 100%"><br><br><br></h1>
+    <svg id="bigTriangleColor" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100" viewBox="0 0 100 102" preserveAspectRatio="none">
+        <path d="M0 0 L50 100 L100 0 Z" />
+    </svg>
 
     <div class="container blog-container">
+
        
   <?php  $count = 1; ?>
  @foreach($blogs as $blog)
@@ -15,7 +20,7 @@
     <?php  $len = strlen($blog->title);?>
             <div class="blog-wrapper">
                 <a href="{{url('/blog-detail.htm/'.$blog->id)}}" class="blog-square">
-                    <img src="{{asset('images/'.$blog->image)}}">
+                    <img src="{{asset('images/'.$blog->Thumbnailimage)}}">
                     <h3 class="bf">@if($len<=30) {{$blog->title}} @else {{substr($blog->title,0,28)}}... @endif</h3>
                     <div class="blog-desc">
                         <p class="bf">Blog Author</p>
@@ -117,5 +122,9 @@
         <!--        </a>-->
         <!--    </div>-->
         <!--</section>-->
+        <svg id="BLOGbigTriangleColor" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100" viewBox="0 0 100 102" preserveAspectRatio="none" style="background: white; ">
+            <path d="M0 0 L50 100 L100 0 Z" />
+        </svg>
     </div>
+    
 @endsection

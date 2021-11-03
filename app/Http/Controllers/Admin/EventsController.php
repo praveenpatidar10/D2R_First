@@ -188,44 +188,101 @@ class EventsController extends Controller
        // print_r($_POST);
         
         if(isset($request->id)){
+            $error = false;$errorThumb = false;
             $event = Event::find($request->id);
             if($request->hasFile('eventImage')){
-                $image_path = "public/images/".$event->image;
-                if(File::exists($image_path)) { File::delete($image_path); }
+               $size = getimagesize(request()->eventImage);
+               $width = $size[0];$height = $size[1];
+               $error=($width==1500 && $height==800)?false:true;
+            }
+            
+            if($request->hasFile('eventThumbnail')){
+                $thumbSize = getimagesize(request()->eventThumbnail);
+                $_width = $thumbSize[0];$_height = $thumbSize[1];
+                $errorThumb = ($_width==450 && $_height==450)?false:true;
+            }
+            
+            if($errorThumb==true){
+                 return Response::json(['status'=>'error','param'=>'Updated','message'=>'Incorrect image size for Thumbnail image ,please enter image with size(450*450)']);
+            }else if($error == true){
+                 return Response::json(['status'=>'error','param'=>'Updated','message'=>'Incorrect image size , please enter image with size(1500*800)']);
+            }else{
+                $dateTime = Carbon::createFromFormat('d/m/Y h:i A', $request->eventDateTime)->format('Y-m-d H:i:s');
+                $event->title= $request->title;
+                $event->link= $request->eventLink;
+                $event->eventDate= $dateTime;//$request->eventDateTime;
+                $event->description= htmlentities($_POST['description']);
+                
+                if($request->hasFile('eventImage')){
+                    $image_path = "public/images/".$event->image;
+                    if(File::exists($image_path)) { File::delete($image_path); }
+                    $fileName = 'Event-'.uniqid().'.'.request()->eventImage->getClientOriginalExtension();
+                    $request->eventImage->move('public/images/', $fileName);
+                    $event->image=$fileName;   
+                }
+                
+                if($request->hasFile('eventThumbnail')){ 
+                    $image_path_ = "public/images/".$event->Thumbnailimage;
+                    if(File::exists($image_path_)) { File::delete($image_path_); }
+                    $fileName = 'Event-Thumbnail-'.uniqid().'.'.request()->eventThumbnail->getClientOriginalExtension();
+                    $request->eventThumbnail->move('public/images/', $fileName);
+                    $event->Thumbnailimage=$fileName;
+                }
+                
+                
+                if( $event->status=='Live'){
+                     $event->youtube_link =$request->YouTubeUrl;
+                }
+                if( $event->status=='Past'){
+                     $event->recording_link =$request->recordUrl;
+                }
+                $event->save();
+                return Response::json(['status'=>'success','param'=>'Updated','message'=>'Event Updated successfully.']); 
+            }
+            
+            
+        }else{
+            
+            $error = false;$errorThumb = false;
+            $size = getimagesize(request()->eventImage);
+            $width = $size[0];$height = $size[1];
+            $error=($width==325 && $height==300)?false:true;
+              
+            
+            $thumbSize = getimagesize(request()->eventThumbnail);
+             $_width = $thumbSize[0];$_height = $thumbSize[1];
+            $errorThumb = ($_width==450 && $_height==450)?false:true;
+             
+            if($errorThumb==true){
+                 return Response::json(['status'=>'error','param'=>'Created','message'=>'Incorrect image size for Thumbnail image ,please enter image with size(450*450)']);
+            }else if($error == true){
+                 return Response::json(['status'=>'error','param'=>'Created','message'=>'Incorrect image size , please enter image with size(1500*800)']);
+            }else{  
+            
+                if($request->hasFile('eventThumbnail')){
+                    // $image_path_ = "public/images/".$event->Thumbnailimage;
+                    // if(File::exists($image_path_)) { File::delete($image_path_); }
+                    $fileNameThumb= 'Event-Thumbnail-'.uniqid().'.'.request()->eventThumbnail->getClientOriginalExtension();
+                    $request->eventThumbnail->move('public/images/', $fileNameThumb);
+                    $event->Thumbnailimage=$fileNameThumb;
+                }
+                
+                
+                $dateTime = Carbon::createFromFormat('d/m/Y h:i A', $request->eventDateTime)->format('Y-m-d H:i:s');
+                $event = new Event;
+                $event->title= $request->title;
+                $event->link= $request->eventLink;
+                $event->eventDate= $dateTime;//$request->eventDateTime;
+                $event->description= htmlentities($_POST['description']);
+                
                 $fileName = 'Event-'.uniqid().'.'.request()->eventImage->getClientOriginalExtension();
                 $request->eventImage->move('public/images/', $fileName);
                 $event->image=$fileName;
-            }
-             $dateTime = Carbon::createFromFormat('d/m/Y h:i A', $request->eventDateTime)->format('Y-m-d H:i:s');
-            $event->title= $request->title;
-            $event->link= $request->eventLink;
-            $event->eventDate= $dateTime;//$request->eventDateTime;
-            $event->description= htmlentities($_POST['description']);
-            if( $event->status=='Live'){
-                 $event->youtube_link =$request->YouTubeUrl;
-            }
-            if( $event->status=='Past'){
-                 $event->recording_link =$request->recordUrl;
-            }
-            $event->save();
-            $msg = "Updated";
-        }else{
-            // $dt = Carbon::create($request->eventDateTime);
-            // $dateTime = $dt->format('Y-m-d H:i:s');  
-            $dateTime = Carbon::createFromFormat('d/m/Y h:i A', $request->eventDateTime)->format('Y-m-d H:i:s');
-            $event = new Event;
-            $event->title= $request->title;
-            $event->link= $request->eventLink;
-            $event->eventDate= $dateTime;//$request->eventDateTime;
-            $event->description= htmlentities($_POST['description']);
-            
-            $fileName = 'Event-'.uniqid().'.'.request()->eventImage->getClientOriginalExtension();
-            $request->eventImage->move('public/images/', $fileName);
-            $event->image=$fileName;
-            $event->save();
-            $msg = "Created";
+                $event->save();
+               return Response::json(['status'=>'success','param'=>'Created','message'=>'Event Created successfully.']);
+             }
         }
-        return Response::json(['status'=>'success','param'=>$msg,'message'=>'Event '.$msg.' successfully.']);
+        
     }
     
     
@@ -283,6 +340,11 @@ class EventsController extends Controller
         $event = Event::find($request->id);
         $image_path = "public/images/".$event->image;
         if(File::exists($image_path)) { File::delete($image_path); }
+        
+        $image_patheventThumbnail = "public/images/".$event->eventThumbnail;
+        if(File::exists($image_patheventThumbnail)) { File::delete($image_patheventThumbnail); }
+        
+        
        Event::where('id',$request->id)->delete();
       return Response::json(['status'=>'success','message'=>"Event successfully deleted "]);
     }

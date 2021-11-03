@@ -20,6 +20,12 @@ $(function () {
                      }
                 
             },
+            'eventThumbnail':{ 
+                required: {
+                         depends: function () { return $('#id').length == 0; }
+                     }
+                
+            },
                     'YouTubeUrl':{ 
                         required: {
                          depends: function () { return $('#YouTubeUrl').length == 0; }
@@ -42,6 +48,9 @@ $(function () {
              'eventDateTime':{
                 required: "Choose event date-time",
              },
+             'eventThumbnail':{
+                required: "Event Thumbnail is required!",
+             },
             'eventImage':{
                 required: "Event image is required!",
             },
@@ -61,6 +70,8 @@ $(function () {
             if(name=="description"){
                 error.insertAfter(element.parent('.form-group'));
             }else if(name=="eventImage"){
+                error.insertAfter(element.parent().parent('.input-group'));
+            }else if(name=="eventThumbnail"){
                 error.insertAfter(element.parent().parent('.input-group'));
             }else if (element.hasClass("summernote")) {
                 error.insertAfter(element.siblings(".note-editor"));

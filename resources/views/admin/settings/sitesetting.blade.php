@@ -164,6 +164,36 @@
        <div class="col-md-6">
           <div class="card card-info">
                   <div class="card-header">
+                    <h3 class="card-title">Satsang Logo (<span style="font-size: 14px;">Preferred Size:  Width:320px * Height:239px</span>)</h3>
+                  </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        
+                        <div class="p-image">
+            		       <form action="#" method="post" enctype="multipart/form-data" id="form-upload-satsang_logo">
+                             @csrf
+                             <input type="hidden" value="{{$setting->id}}" class="form-control" id="satsanglogo_id" name="satsanglogo_id" >
+                             <input class="file-upload file-upload-satsang_logo" name="satsang_logo" id="satsang_logo" type="file" accept="image/png"/>
+                             
+                           </form>
+                           <img style="width:45%" src="{{asset('media/'.config('custom.satsang_logo'))}}" id="uploaded-satsang_logo" class="avatar-xl rounded-circle" alt="">
+            			</div>
+            			<div id="progressBar-satsang_logo" class="progress progress-sm active" style="display:none;">
+                          <div class="progress-bar bg-success progress-bar-striped" id="progressBar-striped-satsang_logo" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+                            <span class="sr-only">0% Complete</span>
+                          </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn btn-outline-success btn-sm" id="upload-button-satsang_logo" style="">Update</a>
+                </div>
+           </div>
+       </div>
+       <div class="col-md-6">
+          <div class="card card-info">
+                  <div class="card-header">
                     <h3 class="card-title">About us image (<span style="font-size: 14px;">Preferred Size:  Width:1500px * Height:666px</span>)</h3>
                   </div>
                 <div class="row">

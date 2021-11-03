@@ -23,7 +23,7 @@
                           style="width: 100%; height:400px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{isset($ministries)?(html_entity_decode($ministries->description)):''}}</textarea>
                   </div>
                   <div class="form-group">
-                    <label for="ministriesImage">Image  @if(!isset($ministries))<span class="text-danger">*</span>  @endif</label>
+                    <label for="ministriesImage">Image(1000*500)  @if(!isset($ministries))<span class="text-danger">*</span>  @endif</label>
                     <div class="input-group">
                       <div class="custom-file">
                         <input type="file" class="custom-file-input" id="ministriesImage" name="ministriesImage">

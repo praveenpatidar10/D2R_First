@@ -94,29 +94,85 @@ class BlogsController extends Controller
         
         if(isset($request->id)){
             $blog = Blog::find($request->id);
+            
+             $error = false;$errorThumb=false;
             if($request->hasFile('blogImage')){
+                $Size = getimagesize(request()->blogImage);
+                $_width = $Size[0];$_height = $Size[1];
+                $error = ($_width==1200 && $_height==500)?false:true;
+            }
+            
+            if($request->hasFile('blogThumbnail')){
+                $thumbSize = getimagesize(request()->blogThumbnail);
+                $_width = $thumbSize[0];$_height = $thumbSize[1];
+                $errorThumb = ($_width==450 && $_height==450)?false:true;
+            }
+            
+            if($errorThumb==true){
+                 return Response::json(['status'=>'error','param'=>'Updated','message'=>'Incorrect image size for Thumbnail image ,please enter image with size(450*450)']);
+            }else if($error==true){
+                 return Response::json(['status'=>'error','param'=>'Updated','message'=>'Incorrect image size ,please enter image with size(1200*500)']);
+            }else{
+                
+                $blog->title= $request->title;
+                $blog->description= htmlentities($_POST['description']);
+                
+               if($request->hasFile('blogImage')){ 
                 $image_path = "public/images/".$blog->image;
                 if(File::exists($image_path)) { File::delete($image_path); }
                 $fileName = 'Blog-'.uniqid().'.'.request()->blogImage->getClientOriginalExtension();
                 $request->blogImage->move('public/images/', $fileName);
                 $blog->image=$fileName;
+               }
+               
+               if($request->hasFile('blogThumbnail')){ 
+                    $image_path_ = "public/images/".$blog->Thumbnailimage;
+                    if(File::exists($image_path_)) { File::delete($image_path_); }
+                    $fileName = 'Blog-Thumbnail-'.uniqid().'.'.request()->blogThumbnail->getClientOriginalExtension();
+                    $request->blogThumbnail->move('public/images/', $fileName);
+                    $blog->Thumbnailimage=$fileName;
+                }
+                
+                $blog->save();
+                return Response::json(['status'=>'success','param'=>"Updated",'message'=>'Blog Updated successfully.']);
             }
-            $blog->title= $request->title;
-            $blog->description= htmlentities($_POST['description']);
-            $blog->save();
-            $msg = "Updated";
         }else{
-            $blog = new Blog;
-            $blog->title= $request->title;
-            $blog->description= htmlentities($_POST['description']);
-            
-            $fileName = 'Blog-'.uniqid().'.'.request()->blogImage->getClientOriginalExtension();
-            $request->blogImage->move('public/images/', $fileName);
-            $blog->image=$fileName;
-            $blog->save();
-            $msg = "Created";
+             
+            $error = false;$errorThumb = false;
+            $size = getimagesize(request()->blogImage);
+            $width = $size[0];$height = $size[1];
+            $error=($width==1200 && $height==500)?false:true;
+             
+            $thumbSize = getimagesize(request()->blogThumbnail);
+            $_width = $thumbSize[0];$_height = $thumbSize[1];
+            $errorThumb = ($_width==450 && $_height==450)?false:true;
+             
+            if($errorThumb==true){
+                 return Response::json(['status'=>'error','param'=>'Created','message'=>'Incorrect image size for Thumbnail image ,please enter image with size(450*450)']);
+            }else if($error == true){
+                 return Response::json(['status'=>'error','param'=>'Created','message'=>'Incorrect image size , please enter image with size(1200*500)']);
+            }else{  
+                
+                $blog = new Blog;
+                $blog->title= $request->title;
+                $blog->description= htmlentities($_POST['description']);
+                    
+                    $fileName = 'Blog-'.uniqid().'.'.request()->blogImage->getClientOriginalExtension();
+                    $request->blogImage->move('public/images/', $fileName);
+                    $blog->image=$fileName;
+                    
+                    $fileName = 'Blog-Thumbnail-'.uniqid().'.'.request()->blogThumbnail->getClientOriginalExtension();
+                    $request->blogThumbnail->move('public/images/', $fileName);
+                    $blog->Thumbnailimage=$fileName;
+                    
+                    if($blog->save()){
+                        return Response::json(['status'=>'success','param'=>"Created",'message'=>'Blog Created successfully.']);
+                     }else{
+                        return Response::json(['status'=>'Required','param'=>"Created",'message'=>'Something went wrong while add Blog']); 
+                     }
+            }
         }
-        return Response::json(['status'=>'success','param'=>$msg,'message'=>'Blog '.$msg.' successfully.']);
+       
     }
     
     

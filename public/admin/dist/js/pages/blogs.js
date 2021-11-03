@@ -16,7 +16,13 @@ $(function () {
             'blogImage':{  required: {
                          depends: function () { return $('#id').length == 0; }
                      }
-                }
+                },
+           'blogThumbnail':{ 
+                required: {
+                         depends: function () { return $('#id').length == 0; }
+                     }
+                
+            },
         },
         messages: {
            
@@ -25,6 +31,9 @@ $(function () {
              },
             'blogImage':{
                 required: "Blog image is required!",
+            },
+            "blogThumbnail":{
+                 required: "Blog Thumbnail image is required!",
             },
             'description':{ required: "Enter blog description." },
         },

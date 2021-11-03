@@ -2,14 +2,17 @@
 namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+
 use Response;
 use Mail;
 use App\Model\Blog;
 use App\Model\Subscriber;
 use App\Model\Event;
 use App\Model\Ministries;
-use App\Model\Gallery;
+use App\Model\Satsang;
 use App\Model\Collaborators;
+use App\Model\Resources;
+use App\Model\ResourceIndexing;
 class WelcomeController extends Controller
 {
     /**
@@ -26,7 +29,7 @@ class WelcomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(){
+    public function index(Request $request){
         $templete=['title'=>'DBF CENTRAL','subtitle'=>'Home','Link'=>'home'];
         $eventcount = Event::count();
         
@@ -60,11 +63,36 @@ class WelcomeController extends Controller
         // }
         
         
+        
+        if($request->session()->has('temp_session')) {
+            if($request->session()->get('temp_session')=="DBF") { 
+                $templete['hasSession'] = "Yes";  
+            }else{
+                return redirect('dbf-satsang.htm');
+                $templete['hasSession'] = "Yes";  
+            } 
+        }else{
+            $templete['hasSession'] = "No";  
+        }
+        
+        
         $templete['homeeventcount'] = $homeeventcount;
         $templete['liveeventcount'] = $liveeventcount;
         $templete['eventcount']=$eventcount;
         return view('web.welcome',$templete);
     }
+    
+    public function setVisitPreference(Request $request){
+        if($request->visit=='DBF'){
+            $request->session()->put('temp_session', 'DBF');
+             echo url('/');
+        }else{
+         $request->session()->put('temp_session', 'DBFSATSANG');   
+         echo url('/dbf-satsang.htm');
+        }
+    }
+    
+    
     
     public function aboutUsPage(){
         
@@ -72,6 +100,13 @@ class WelcomeController extends Controller
         $templete['collaborators']=Collaborators::where('status','Active')->get();
         return view('web.about',$templete);
     }
+    
+    public function satSangPage(){
+        $templete=['title'=>'DBF CENTRAL','subtitle'=>'DBF Satsang','Link'=>'satsang'];
+        $templete['images'] = Satsang::orderBy('id','DESC')->get();
+        return view('web.satSang',$templete);
+    }
+    
     public function eventsPage(){
         $templete=['title'=>'DBF CENTRAL','subtitle'=>'Events','Link'=>'events'];
         $eventcount = Event::count();
@@ -81,6 +116,27 @@ class WelcomeController extends Controller
         $templete['eventcount']=$eventcount;
         return view('web.events',$templete);
     }
+    
+    public function resourcesPage(){
+        
+        $templete=['title'=>'DBF CENTRAL','subtitle'=>'Resources','Link'=>'resources'];
+        $Count = Resources::where('status','Active')->first();
+        if($Count){
+          $templete['latest'] = Resources::orderBy('id','DESC')->where('status','Active')->first();
+          $templete['latestIndexes'] = ResourceIndexing::orderBy('id','ASC')->where('resourceId',$templete['latest']->id)->get();
+          $templete['others'] = Resources::orderBy('id','DESC')->where('status','Active')->where('id','!=', $templete['latest']->id)->paginate(5);
+        }
+        return view('web.resourcePage',$templete);
+    }
+    
+    function getVideoIndexing(){
+        $videoId =  $_POST['videoId'];
+        $res = Resources::where('videoId',$videoId)->first();
+        $indexes = ResourceIndexing::select('title','labelTime','indexTime')->orderBy('id','ASC')->where('resourceId',$res->id)->get();
+        return Response::json(['status'=>'success','message'=>'Info get successfully','data'=>['resource'=>$res,'indexes'=>$indexes]]);
+    }
+    
+    
     public function blogsPage(){
         $templete=['title'=>'DBF CENTRAL','subtitle'=>'Blogs','Link'=>'blogs'];
         $blogcount = Blog::where('status','Active')->count();

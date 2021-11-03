@@ -23,16 +23,16 @@
                     </div>
                     
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <label for="eventDateTime">Event Date <span class="text-danger">*</span></label>
                                 
                                 <input type="text" class="form-control" id="eventDateTime" name="eventDateTime" placeholder="Enter event date" value="{{isset($event)?$dateTime:''}}">
                           </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                              <div class="form-group">
-                                <label for="eventImage">Image @if(!isset($event))<span class="text-danger">*</span>  @endif</label>
+                                <label for="eventImage">Image(1500X800) @if(!isset($event))<span class="text-danger">*</span>  @endif</label>
                                 <div class="input-group">
                                   <div class="custom-file">
                                     <input type="file" class="custom-file-input" id="eventImage" name="eventImage">
@@ -41,7 +41,18 @@
                                 </div>
                               </div>
                         </div>
-                        <div class="col-md-5">
+                        <div class="col-md-3">
+                             <div class="form-group">
+                                <label for="eventImage">Thumbnail Image(450X450) @if(!isset($event))<span class="text-danger">*</span>  @endif</label>
+                                <div class="input-group">
+                                  <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="eventIThumbnail" name="eventThumbnail">
+                                    <label class="custom-file-label" for="eventThumbnail">Choose file</label>
+                                  </div>
+                                </div>
+                              </div>
+                        </div>
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="eventLink">Register link  <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="eventLink" name="eventLink" placeholder="Enter event link" value="{{isset($event)?$event->link:''}}">

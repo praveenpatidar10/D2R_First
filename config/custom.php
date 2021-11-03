@@ -21,4 +21,5 @@
   'page_header_blog' => 'blog-header-1629392092.jpeg',
   'page_header_gallery' => 'gallery-header-1629392254.jpeg',
   'page_header_contactus' => 'contactus-header-1629392262.jpeg',
+  'satsang_logo' => 'satsang-logo-1630487723.png',
 ) ;

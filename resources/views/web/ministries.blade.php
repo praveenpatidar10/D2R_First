@@ -9,8 +9,13 @@
         <!--<h1 class="hf1">Be a Believer!</h1>-->
     </header>
 
+    <h1 class="trianglesection" style="background: #13a1e3; width: 100%"><br><br><br></h1>
+    <svg id="bigTriangleColor" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100" viewBox="0 0 100 102" preserveAspectRatio="none">
+        <path d="M0 0 L50 100 L100 0 Z" />
+    </svg>
 
     <div class="container ministries-container">
+
         <div class="bootstrap wrapper pb-5">
                 <?php if($ministriescount){
                         $count = 1; ?>
@@ -195,5 +200,9 @@
                 </div>
             </div>
         </div>
+        <svg id="MINISTRYbigTriangleColor" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100" viewBox="0 0 100 102" preserveAspectRatio="none" style="background: white; ">
+            <path d="M0 0 L50 100 L100 0 Z" />
+        </svg>
     </div>
+    
 @endsection

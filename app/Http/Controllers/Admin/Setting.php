@@ -96,6 +96,26 @@ class Setting extends Controller
                 }else{
                     return Response::json(array('status'=>'error','message'=>'Only png extenstion is required.')); 
                 }
+            }else if($request->column=='satsang_logo'){
+                if(request()->satsang_logo->getClientOriginalExtension()=='png'){
+                     $size = getimagesize(request()->satsang_logo);
+                     $width = $size[0];$height = $size[1];
+                     if($width==320 && $height==239){
+                         $setting = Site_setting::find($request->satsanglogo_id);
+                         $slogo_path = "public/media/".$setting->satsang_logo;
+                         if(File::exists($slogo_path)) { File::delete($slogo_path); }
+                         $fileName = 'satsang-logo-'.time().'.'.request()->satsang_logo->getClientOriginalExtension();
+                         $request->satsang_logo->move('public/media/', $fileName);
+                         $setting->satsang_logo=$fileName;  
+                         $setting->save();
+                         $this->updateCustomConfig('satsang_logo',$fileName);
+                         return Response::json(['status'=>'success','path'=>asset('media/'.$fileName),'message'=>"Satsang logo uploded successfully"]);
+                     }else{
+                         return Response::json(array('status'=>'error','message'=>'Image size sholud be 320 X 239'));  
+                     }
+                }else{
+                    return Response::json(array('status'=>'error','message'=>'Only png extenstion is required.')); 
+                }
             }else if($request->column=='website_aboutus'){
                 if(request()->aboutusImage->getClientOriginalExtension()=='png'){
                      $size = getimagesize(request()->aboutusImage);

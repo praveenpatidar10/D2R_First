@@ -133,9 +133,15 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{url('admin/galleries')}}" class="nav-link <?=($Link=='galleries')?'active':'';?>">
+            <a href="{{url('admin/resources')}}" class="nav-link <?=($Link=='resources')?'active':'';?>">
+              <i class="nav-icon fas fa-hand-holding-heart"></i>
+              <p class="text">Resources Management</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{url('admin/satsang')}}" class="nav-link <?=($Link=='satsang')?'active':'';?>">
               <i class="nav-icon fas fa-images"></i>
-              <p class="text">Gallery Management</p>
+              <p class="text">DBF satsang</p>
             </a>
           </li>
           <li class="nav-item">

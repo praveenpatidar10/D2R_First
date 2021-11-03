@@ -18,7 +18,9 @@ use Illuminate\Support\Facades\Route;
 // });
 Route::get('/', 'WelcomeController@index');
 Route::get('/about-us.htm', 'WelcomeController@aboutUsPage');
+Route::get('/dbf-satsang.htm', 'WelcomeController@satSangPage');
 Route::get('/events.htm', 'WelcomeController@eventsPage');
+Route::get('/resources.htm', 'WelcomeController@resourcesPage');
 Route::get('/blogs.htm', 'WelcomeController@blogsPage');
 Route::get('/blog-detail.htm/{param}', 'WelcomeController@blogsDeatilPage');
 Route::get('/ministries.htm', 'WelcomeController@ministriesPage');
@@ -28,6 +30,8 @@ Route::get('/join-us.htm', 'WelcomeController@joinusPage');
 
 Route::post('/user-subscribe.htm', 'WelcomeController@addUserSubscription');
 Route::post('/post-enquiry.htm', 'WelcomeController@savePostEnquiry');
+Route::post('/get-resource-data.htm', 'WelcomeController@getVideoIndexing');
+Route::post('/update-visit-preferance.htm', 'WelcomeController@setVisitPreference');
 
  Route::get('/clear-cache', function() {
          // $exitCode = Artisan::call('route:cache');
@@ -134,9 +138,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
          Route::post('settings/update/site-setting', 'Admin\Setting@updateSiteSettings');
          
          //Galleries
-         Route::get('galleries', 'Admin\GalleriesController@index')->name('admin.galleries');
-         Route::post('galleries/save', 'Admin\GalleriesController@saveFile');
-         Route::get('galleries/delete/{id}', 'Admin\GalleriesController@deleteGallery');
+         Route::get('satsang', 'Admin\SatsangsController@index')->name('admin.satsang');
+         Route::post('satsang/save', 'Admin\SatsangsController@saveFile');
+         Route::get('satsang/delete/{id}', 'Admin\SatsangsController@deleteGallery');
          
          
           //Collaborators
@@ -147,6 +151,20 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
          Route::get('collaborator/status/update/{id}/{status}', 'Admin\CollaboratorsController@statusUpdate');
          Route::get('collaborator/getDesc/{id}', 'Admin\CollaboratorsController@showCollaboratorDescription');
          Route::get('collaborator/delete/{id}', 'Admin\CollaboratorsController@deleteCollaborator');
+         
+         //Blogs
+         Route::get('resources', 'Admin\ResourcesController@index')->name('admin.resources');
+         Route::get('resources/manage/{param?}', 'Admin\ResourcesController@manage');
+          Route::get('resources/view/{param?}', 'Admin\ResourcesController@view');
+         Route::post('resources/save', 'Admin\ResourcesController@saveResources');
+         Route::post('resources/video-indexing/save', 'Admin\ResourcesController@saveResourcesVideoIndexing');
+         
+         Route::post('resources/getdatatable', 'Admin\ResourcesController@getResourcesDatatable');
+         Route::get('resources/status/update/{id}/{status}', 'Admin\ResourcesController@statusUpdate');
+         Route::get('resources/getDesc/{id}', 'Admin\ResourcesController@showResourcesDescription');
+         Route::get('resources/delete/{id}', 'Admin\ResourcesController@deleteResources');
+         Route::get('resources/video-index/delete/{id}', 'Admin\ResourcesController@deleteResourcesIndex');
+         
          
       //   Route::post('settings/save-mail-setting', 'Admin\Setting@saveMailSettings');
          
